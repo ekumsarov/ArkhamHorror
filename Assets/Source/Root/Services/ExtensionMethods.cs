@@ -1,0 +1,144 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+
+public static class ExtensionMethods
+{
+    #region Bounds
+    public static float Right(this Bounds bounds)
+    {
+        return bounds.center.x + bounds.size.x / 2;
+    }
+
+    public static float Left(this Bounds bounds)
+    {
+        return bounds.center.x - bounds.size.x / 2;
+    }
+
+    public static float Bottom(this Bounds bounds)
+    {
+        return bounds.center.y - bounds.size.y / 2;
+    }
+
+    public static float Top(this Bounds bounds)
+    {
+        return bounds.center.y + bounds.size.y / 2;
+    }
+
+    public static bool OutLeft(this Bounds bounds, Bounds other)
+    {
+        return bounds.center.x + bounds.size.x / 2 < other.center.x - other.size.x / 2;
+    }
+
+    public static int OverlapPercent(this Bounds A, Bounds B)
+    {
+        float result = 0f;
+        //trivial cases
+        if (!A.Intersects(B)) return 0;
+
+
+        //# overlap between A and B
+        float SA = A.size.x * A.size.y;
+        float SB = B.size.x * B.size.y;
+        float leftX = Mathf.Max(A.Left(), B.Left());
+        float rightX = Mathf.Min(A.Right(), B.Right());
+        float rightY = Mathf.Max(A.Top(), B.Top());
+        float leftY = Mathf.Min(A.Bottom(), B.Bottom());
+        float SI = Mathf.Max(0, rightX - leftX) *
+                    Mathf.Max(0, rightY - leftY);
+        float SU = SA + SB - SI;
+        result = SI / SU; //ratio
+        result *= 100f; //percentage
+        return (int)result;
+    }
+
+    public static Bounds bounds(this Image image)
+    {
+        return new Bounds(new Vector2(image.rectTransform.position.x, image.rectTransform.position.y), image.rectTransform.rect.size);
+    }
+    #endregion
+
+    #region Vectors
+    public static void ToLeft(ref this Vector3 vector, float delta)
+    {
+        vector = new Vector3(vector.x - delta, vector.y, vector.z);
+    }
+
+    public static void ToRight(ref this Vector3 vector, float delta)
+    {
+        vector = new Vector3(vector.x + delta, vector.y, vector.z);
+    }
+
+    public static void ToTop(ref this Vector3 vector, float delta)
+    {
+        vector = new Vector3(vector.x, vector.y + delta, vector.z);
+    }
+
+    public static void ToBottom(ref this Vector3 vector, float delta)
+    {
+        vector = new Vector3(vector.x, vector.y - delta, vector.z);
+    }
+
+    public static void SetX(ref this Vector3 vector, float x)
+    {
+        vector = new Vector3(x, vector.y, vector.z);
+    }
+
+    public static Vector3 SetY(this Vector3 vector, float y)
+    {
+        return new Vector3(vector.x, y, vector.z);
+    }
+
+    public static Vector3 Absolute(this Vector3 vector)
+    {
+        return new Vector3(Mathf.Abs(vector.x), Mathf.Abs(vector.y), Mathf.Abs(vector.z));
+    }
+
+    public static Vector2 ToVector2(this Vector3 vector)
+    {
+        return new Vector2(vector.x, vector.y);
+    }
+
+    public static T Last<T>(this List<T> list)
+    {
+        return list[list.Count - 1];
+    }
+
+    public static int LastIndex<T>(this List<T> list)
+    {
+        return list.Count - 1;
+    }
+    #endregion
+
+    #region Transform
+    public static void SetX(this Transform vector, float x)
+    {
+        Vector3 v = vector.position;
+        v.x = x;
+        vector.position = v;
+    }
+
+    public static Vector2 Position(this Transform transform)
+    {
+        return new Vector2(transform.position.x, transform.position.y);
+    }
+    #endregion
+
+    #region RectTransform
+    public static void SetX(this RectTransform vector, float x)
+    {
+        Vector3 v = vector.position;
+        v.x = x;
+        vector.position = v;
+    }
+
+    public static void SetLocalX(this RectTransform vector, float x)
+    {
+        Vector3 v = vector.localPosition;
+        v.x = x;
+        vector.localPosition = v;
+    }
+    #endregion
+}
