@@ -81,8 +81,6 @@ namespace EVI
                 }
 
             }
-            // Add drag handles to items, so they can be easily dragged into the inventory if characters etc...
-            //_tree.EnumerateTree().Where(x => x.Value as SceneData).ForEach(AddDragHandles);
 
             return _tree;
         }
