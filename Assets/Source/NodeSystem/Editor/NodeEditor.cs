@@ -70,7 +70,7 @@ namespace EVI
                 {
                     DirectoryInfo info = new DirectoryInfo(directory);
                     _tree.AddAssetAtPath(item.Name + "/" + info.Name, _folderPath + item.Name + "/" + info.Name + "/QuestContainer.asset", typeof(QuestContainer));
-                    
+                    _tree.AddAllAssetsAtPath(item.Name + "/" + info.Name, _folderPath + item.Name + "/" + info.Name + "/", typeof(Encounter)).ForEach(AddDragHandles);
                     foreach (var subDir in Directory.GetDirectories(directory))
                     {
                         DirectoryInfo subInfo = new DirectoryInfo(subDir);
@@ -78,14 +78,9 @@ namespace EVI
                         _tree.AddAssetAtPath(sub, _folderPath + item.Name + "/" + info.Name + "/" + subInfo.Name + "/" + subInfo.Name + ".asset", typeof(QuestNode)).ForEach(AddDragHandles);
                         _tree.AddAllAssetsAtPath(sub, _folderPath + item.Name + "/" + info.Name + "/" + subInfo.Name, typeof(LogicNode)).ForEach(AddDragHandles);
                     }
-
-                    _tree.AddAllAssetsAtPath(item.Name + "/" + info.Name, _folderPath + item.Name + "/" + info.Name + "/", typeof(Encounter)).ForEach(AddDragHandles);
                 }
 
             }
-
-            // Add drag handles to items, so they can be easily dragged into the inventory if characters etc...
-            //_tree.EnumerateTree().Where(x => x.Value as SceneData).ForEach(AddDragHandles);
 
             return _tree;
         }

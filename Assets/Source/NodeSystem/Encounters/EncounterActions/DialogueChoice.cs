@@ -51,7 +51,7 @@ namespace EVI
             if(_checkType == ChoiceCheckType.SkillCheck)
             {
                 List<GameCard> detectives = _encounter.DetectiveCards().Where(card => card.CardType == CardType.Player).ToList();
-
+                
 
 
                 return;
