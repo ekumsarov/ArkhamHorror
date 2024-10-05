@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace EVI
 {
+    [JSONSerializable]
     public class BaseView : BindableView
     {
         [BindTo]
@@ -15,12 +16,21 @@ namespace EVI
         }
 
         [BindTo]
-        public void SetPosition(Vector2 pos) => transform.position = pos;
-        public void SetPosition(float x, float y)
+        public void SetPosition(Vector3 pos)
         {
-            transform.position = new Vector2(x, y);
+            SetPositionInternal(pos);
         }
-        public Vector2 Position => transform.position;
-        public Vector3 PositionVector3 => transform.position;
+
+        public void SetupPosition(Vector3 pos)
+        {
+            transform.position = pos;
+        }
+
+        protected virtual void SetPositionInternal(Vector3 pos)
+        {
+            transform.position = pos;
+        }
+
+        public Vector3 Position => transform.position;
     }
 }

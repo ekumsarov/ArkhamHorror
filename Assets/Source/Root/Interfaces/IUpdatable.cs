@@ -4,4 +4,9 @@ namespace EVI
     {
         public void Tick(float deltaTime);
     }
+
+    public interface IFixedUpdatable
+    {
+        public void FixedTick();
+    }
 }

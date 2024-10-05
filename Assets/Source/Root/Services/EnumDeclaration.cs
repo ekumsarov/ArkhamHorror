@@ -15,6 +15,11 @@ public enum LocationType
 
 }
 
+public enum GameState
+{
+    ManualControl
+}
+
 public enum GamePhase
 {
     Morning,

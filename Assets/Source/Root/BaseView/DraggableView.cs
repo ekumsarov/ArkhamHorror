@@ -37,8 +37,8 @@ namespace EVI
 
             while(_isDraging)
             { 
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - PositionVector3;
-                SetPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                //Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Position;
+                //SetPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
                 yield return null;
             }

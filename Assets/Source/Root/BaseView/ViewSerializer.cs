@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace EVI
 {
-    public abstract class ViewSerializer<TClass> : SerializedMonoBehaviour, IViewInitializer<TClass>
+    [JSONSerializable]
+    public abstract class ViewSerializer<TClass> : MonoBehaviour, IViewInitializer<TClass>
     {
         #region Initialization
         private Dictionary<Type[], Delegate> _callbacksDictionary = new Dictionary<Type[], Delegate>(new TypeArrayComparer());

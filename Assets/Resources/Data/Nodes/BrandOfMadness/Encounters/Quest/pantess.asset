@@ -44,13 +44,30 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-    _succesNextNode: {fileID: 0}
+    _succesNextNode: {fileID: 11400000, guid: 12443f7ffef48334d80231531767e3ed, type: 2}
     _checkType: 1
     _failNextNode: {fileID: 0}
     _rule:
       _quantityRule: 0
       _amountRule: 0
       _skills: 01000000
+      _rollAmount: 0
+  - _text:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    _succesNextNode: {fileID: 0}
+    _checkType: 0
+    _failNextNode: {fileID: 0}
+    _rule:
+      _quantityRule: 0
+      _amountRule: 0
+      _skills: 
       _rollAmount: 0
   references:
     version: 2

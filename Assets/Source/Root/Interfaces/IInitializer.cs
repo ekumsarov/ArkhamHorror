@@ -25,5 +25,14 @@ namespace EVI
         public JSONNode GetSave();
         public string GetJSONString();
     }
+
+    public interface ISOInitializer<TClass>
+    {
+        public TClass Init(JSONNode node);
+        public TClass Init(JSONNode node, params object[] args);
+        public TClass Init(TClass so);
+        public TClass Init(TClass so, params object[] args);
+        public JSONNode GetSave();
+    }
 }
 

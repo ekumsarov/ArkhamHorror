@@ -11,11 +11,11 @@ namespace EVI
     [RequireComponent(typeof(BoxCollider2D))]
     public class InterectableView : BaseView
     {
-        [OdinSerialize, FoldoutGroup("Interactive")] private bool _isInteractable;
-        [OdinSerialize, FoldoutGroup("Interactive")] private bool _isButton;
-        [OdinSerialize, FoldoutGroup("Interactive")] private bool _isDraggable;
+        [SerializeField, FoldoutGroup("Interactive")] private bool _isInteractable;
+        [SerializeField, FoldoutGroup("Interactive")] private bool _isButton;
+        [SerializeField, FoldoutGroup("Interactive")] private bool _isDraggable;
         
-        [OdinSerialize, ReadOnly, OnInspectorInit("OnInspector")] private BoxCollider2D _collider;
+        [SerializeField, ReadOnly, OnInspectorInit("OnInspector")] private BoxCollider2D _collider;
         private void OnInspector()
         {
             if (_collider == null)
@@ -76,8 +76,8 @@ namespace EVI
 
             while (_isDraging)
             {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - PositionVector3;
-                SetPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Position;
+                SetPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition).SetZ(0));
 
                 yield return null;
             }

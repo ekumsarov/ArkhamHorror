@@ -15,6 +15,27 @@ public class BindToAttribute : Attribute
     }
 }
 
+public class BindEventAttribute : Attribute
+{
+    public string Name = null;
+
+    public BindEventAttribute()
+    {
+
+    }
+}
+
+[AttributeUsage(AttributeTargets.Method)]
+public class BindProcessAttribute : Attribute
+{
+
+}
+
+[AttributeUsage(AttributeTargets.Method)]
+public class BindableProcessAttribute : Attribute
+{
+
+}
 
 [AttributeUsage(AttributeTargets.Property)]
 public class BindablePropertyAttribute : Attribute
@@ -27,8 +48,35 @@ public class BindablePropertyAttribute : Attribute
     }
 }
 
+[AttributeUsage(AttributeTargets.Method)]
+public class BindableEventAttribute : Attribute
+{
+    public string Name;
+
+    public BindableEventAttribute(string memberName = null)
+    {
+        Name = memberName;
+    }
+}
+
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 public class JSONConvertAttribute : Attribute
 {
 
+}
+
+[AttributeUsage(AttributeTargets.Class)]
+public class JSONSerializableAttribute : Attribute
+{
+}
+
+[AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+public class AutoFindComponentAttribute : Attribute
+{
+    public bool SearchInChildren { get; set; }
+
+    public AutoFindComponentAttribute(bool searchInChildren = false)
+    {
+        SearchInChildren = searchInChildren;
+    }
 }

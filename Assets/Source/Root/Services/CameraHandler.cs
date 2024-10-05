@@ -1,10 +1,13 @@
 namespace EVI
 {
     using UnityEngine;
+    using UnityEngine.InputSystem;
+    using EVI.Inputs;
+    using Zenject;
+    using UnityEngine.EventSystems;
 
     [ExecuteInEditMode]
-    [RequireComponent(typeof(Camera))]
-    public class CameraHandler : MonoBehaviour
+    public class CameraHandler : MonoBehaviour, IInitializable
     {
         public enum Constraint { Landscape, Portrait }
 
@@ -176,6 +179,93 @@ namespace EVI
 #endif
         }
 
+#region  Contoll
+
+        [Inject] private MainInput _mainInput;
+        private InputAction _moveAction;
+        private InputAction _rotateAction;
+
+        private void OnEnable()
+        {
+            if(_mainInput == null)
+                return;
+
+            
+            _moveAction = _mainInput.CameraMap.CameraContol;
+            _moveAction.performed += MovePerfomed;
+            _moveAction.started += MoveCanceled;
+            _moveAction.Enable();
+
+            _rotateAction = _mainInput.CameraMap.CameraRotate;
+            _rotateAction.Enable();
+        }
+
+        private bool _isMoveingCamera = false;
+        private Vector3 _cameraVector = Vector3.zero;
+        private void MoveStarted(InputAction.CallbackContext inputAction)
+        {
+            _isMoveingCamera = true;
+        }
+
+
+        private void MovePerfomed(InputAction.CallbackContext inputAction)
+        {
+            _cameraVector = inputAction.ReadValue<Vector2>();
+        }
+
+        private void MoveCanceled(InputAction.CallbackContext inputAction)
+        {
+            _isMoveingCamera = false;
+            _cameraVector = Vector3.zero;
+        }
+
+        private void OnDisable()
+        {
+            if(_mainInput == null)
+                return;
+
+            _moveAction.performed -= MovePerfomed;
+            _moveAction.Disable();
+            _moveAction = null;
+        }
+
+        private Vector3 _roundAxis = new Vector3(0, -1f, 0);
+        private void FixedUpdate() 
+        {
+            if(_moveAction == null)
+                return;
+
+
+            
+            if(_rotateAction.inProgress)
+            {
+                Vector3 lookPoint = Vector3.zero;
+                Ray ray = camera.ScreenPointToRay(new Vector2(Screen.width/2, Screen.height/2));
+                if (Physics.Raycast(ray: ray, hitInfo: out RaycastHit hit))
+                {
+                    lookPoint = hit.point;
+                }
+
+                float axis = _rotateAction.ReadValue<float>();
+                if(axis > 0)
+                {
+                    camera.transform.RotateAround(lookPoint, Vector3.up, 20*axis*Time.fixedDeltaTime);
+                }
+                else if(axis < 0)
+                {
+                    camera.transform.RotateAround(lookPoint, Vector3.up, 20*axis*Time.fixedDeltaTime);
+                }
+            }
+        
+            _cameraVector = Vector3.zero;
+            if(_moveAction.inProgress)
+                _cameraVector = _moveAction.ReadValue<Vector2>();
+                
+            //Vector3 newPos = new Vector3(_cameraVector.x * Time.fixedDeltaTime * 20f, 0f, _cameraVector.y * Time.fixedDeltaTime * 20f);
+            Vector3 newPos = camera.transform.up * _cameraVector.y + transform.right * _cameraVector.x;
+            camera.transform.position += newPos * 20f * Time.deltaTime;
+        }
+#endregion
         void OnDrawGizmos()
         {
             Gizmos.color = wireColor;
@@ -193,6 +283,17 @@ namespace EVI
                 Gizmos.DrawFrustum(Vector3.zero, camera.fieldOfView, camera.farClipPlane, camera.nearClipPlane, camera.aspect);
             }
             Gizmos.matrix = temp;
+        }
+
+        public void Initialize()
+        {
+            _moveAction = _mainInput.CameraMap.CameraContol;
+            _moveAction.performed += MovePerfomed;
+            _moveAction.started += MoveCanceled;
+            _moveAction.Enable();
+
+            _rotateAction = _mainInput.CameraMap.CameraRotate;
+            _rotateAction.Enable();
         }
         #endregion
 

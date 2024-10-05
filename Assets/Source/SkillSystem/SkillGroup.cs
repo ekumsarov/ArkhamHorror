@@ -7,25 +7,11 @@ using UnityEngine;
 
 namespace EVI
 {
-    public class SkillGroup : Bindable
+    [JSONSerializable]
+    public class SkillGroup : SOBindable
     {
-        [SerializeField, OnInspectorInit("InitializeSkills")]
+        [SerializeField, OnInspectorInit("InitializeSkills"), JSONConvert]
         private Dictionary<SkillType, int> _skills;
-
-        protected override void SerializeJson(JSONNode node)
-        {
-            InitializeSkills();
-            JSONArray temp = node.AsArray;
-            if (temp != null)
-            {
-                for (int i = 0; i < temp.Count; i++)
-                {
-                    SkillType checkSkill = Enum.Parse<SkillType>(temp["Skill"].Value);
-                    if (_skills.ContainsKey(checkSkill))
-                        _skills[checkSkill] = temp["Amount"].AsInt;
-                }
-            }
-        }
 
         private void InitializeSkills()
         {

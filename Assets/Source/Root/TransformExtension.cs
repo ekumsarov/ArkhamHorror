@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using Zenject;
-using Sirenix.OdinInspector.Editor;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using System.Collections.Generic;

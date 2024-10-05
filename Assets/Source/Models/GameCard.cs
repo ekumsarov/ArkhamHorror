@@ -4,32 +4,22 @@ using UnityEngine;
 
 namespace EVI.Game
 {
+    [JSONSerializable]
     public class GameCard : BaseModel
     {
-        private GameCardData _data; 
+        [SerializeField, JSONConvert]
+        private CardType _cardType; 
 
-        [BindableProperty]
-        public int HealthPoints { get; private set; }
-
-        [BindableProperty]
-        public int MindPoints { get; private set; }
-
-        public CardType CardType  => _data.CardType; 
-
+        [SerializeField, JSONConvert]
         private SkillGroup _skills;
 
-        private void Initialize(GameCardData data)
-        {
-            _data = data;
-            HealthPoints = _data.HealthPoints;
-            MindPoints = _data.MindPoints;
-            _skills = data.Skills;
-        }
+        [SerializeField, JSONConvert]
+        private int _healthPoints;
 
-        protected override void InitializeParameter()
-        {
-            InitParameter<GameCardData>(Initialize);
-        }
+        [SerializeField, JSONConvert]
+        private int _mindPoints;
+
+        public CardType CardType => _cardType;
 
         public bool CheckSkill(SkillType skill)
         {

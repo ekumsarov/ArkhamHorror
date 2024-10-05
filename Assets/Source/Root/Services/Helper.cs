@@ -2,14 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 using SimpleJSON;
+using System.Globalization;
+using UnityEngine.AI;
+using Unity.VisualScripting;
 
 namespace EVI
 {
     public static class Helper
     {
+        public const int START_SCENE = 10001;
+        public const int CHARACTER_MOVE = 10002;
+        public const int START_BATTLE = 10003;
+        public const int PLAN_READY = 10004;
+        public const int RESET_BATTLE_ROUND = 10005;
+        public const int PING_EVENT = 10006;
+        public const int CHARACTER_ROTATE = 10007;
+        public const int GET_MESSAGE = 10008;
+        public const int SEND_HP = 10009;
+
         public static JSONNode GetNodeFrom<T>(IJsonProcessing<T> arg)
         {
             if (arg == null)
@@ -48,9 +60,9 @@ namespace EVI
         {
             JSONNode node = new JSONObject();
 
-            node.Add("x", value.x);
-            node.Add("y", value.y);
-            node.Add("z", value.z);
+            node.Add("x", value.x.ToString("0.00", CultureInfo.InvariantCulture));
+            node.Add("y", value.y.ToString("0.00", CultureInfo.InvariantCulture));
+            node.Add("z", value.z.ToString("0.00", CultureInfo.InvariantCulture));
 
             return node;
         }
@@ -65,25 +77,342 @@ namespace EVI
             return new Vector3(node["x"].AsFloat, node["y"].AsFloat, node["z"].AsFloat);
         }
 
+        public static void LogVector(Vector3 vector)
+        {
+            Debug.Log("x:" + vector.x.ToString() + "  y:" + vector.y.ToString() + "  z:" + vector.z.ToString());
+        }
+
+        public static bool RaycastObject<T>(Ray ray, out T result)
+        {
+            result = default;
+
+            if(Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = character;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastObject<T>(Ray ray, out T result, out RaycastHit hit)
+        {
+            result = default;
+
+            if(Physics.Raycast(ray, out hit))
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = character;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastObject<T>(Vector3 start, Vector3 end, out T result)
+        {
+            result = default;
+
+            if(Physics.Raycast(start, end, out RaycastHit hit))
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = character;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastObject<T>(Vector3 start, Vector3 end, out T result, out RaycastHit hit)
+        {
+            result = default;
+
+            if(Physics.Raycast(start, end, out hit))
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = character;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastObject<T>(Vector3 start, Vector3 end, out RaycastResult<T> result)
+        {
+            result = default;
+
+            if(Physics.Raycast(start, end, out RaycastHit hit))
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = RaycastResult<T>.Create(character, hit);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastObject<T>(TwoPoints point, out RaycastResult<T> result)
+        {
+            result = default;
+            bool found = false;
+
+            RaycastHit[] hits = Physics.RaycastAll(point.Ray, point.Distance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = RaycastResult<T>.Create(character, hit);
+                    return true;
+                }
+            }
+
+            return found;
+        }
+
+        public static bool RaycastFirst<T>(Ray ray, float distance, out RaycastResult<T> result)
+        {
+            result = default;
+
+            RaycastHit[] hits = Physics.RaycastAll(ray, distance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = RaycastResult<T>.Create(character, hit);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastFirst<T>(Ray ray, out RaycastResult<T> result)
+        {
+            result = default;
+
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
+                {
+                    result = RaycastResult<T>.Create(character, hit);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastFirst<T>(Ray ray, float distance, out T result)
+        {
+            result = default;
+
+            RaycastHit[] hits = Physics.RaycastAll(ray, distance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
+                {
+                    result = res;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastAll<T>(TwoPoints point, float distance, out List<T> result)
+        {
+            result = new List<T>();
+
+            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
+                {
+                    result.Add(res);
+                }
+            }
+
+            return result.Count > 0;
+        }
+
+        public static bool RaycastAll<T>(TwoPoints point, float distance, out List<RaycastResult<T>> result)
+        {
+            result = new List<RaycastResult<T>>();
+
+            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
+                {
+                    result.Add(RaycastResult<T>.Create(res, hit));
+                }
+            }
+
+            return result.Count > 0;
+        }
+
+        public static bool RaycastAll<T, T2>(TwoPoints point, float distance, out List<T> result, out List<T2> result2)
+        {
+            result = new List<T>();
+            result2 = new List<T2>();
+
+            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
+                {
+                    result.Add(res);
+                }
+
+                if(hit.transform.gameObject.TryGetComponent<T2>(out T2 res2))
+                {
+                    result2.Add(res2);
+                }
+            }
+
+            return result.Count > 0;
+        }
+
+        public static bool RaycastTarget<T>(TwoPoints point, out RaycastHit hit)
+        {
+            hit = default;
+            RaycastHit[] hits = Physics.RaycastAll(point.Ray);
+            foreach(var target in hits)
+            {
+                if(target.transform.gameObject.TryGetComponent<T>(out T result))
+                {
+                    hit = target;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool RaycastNearstObject<T, T2>(TwoPoints point, float distance, out T result, out T2 result2) where T : MonoBehaviour where T2 : MonoBehaviour
+        {
+            result = null;
+            result2 = null;
+
+            float resultDistance = 1000f;
+            float resultDistance2 = 1000f;
+
+            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
+                {
+                    TwoPoints resultPoint = TwoPoints.Create(point.Start, hit.transform.position.SetY(2f));
+                    if(resultPoint.Distance < resultDistance)
+                    {
+                        resultDistance = resultPoint.Distance;
+                        result = res;
+                    }
+                }
+
+                if(hit.transform.gameObject.TryGetComponent<T2>(out T2 res2))
+                {
+                    TwoPoints resultPoint2 = TwoPoints.Create(point.Start, hit.transform.position.SetY(2f));
+                    if(resultPoint2.Distance < resultDistance)
+                    {
+                        resultDistance2 = resultPoint2.Distance;
+                        result2 = res2;
+                    }
+                }
+            }
+
+            return resultDistance < resultDistance2;
+        }
+
+        public static bool RaycastSphere<T>(TwoPoints points, float radius, float maxDistance, out List<T> result)
+        {
+            result = new List<T>();
+
+            RaycastHit[] hits = Physics.SphereCastAll(points.Start, radius, points.Direction, maxDistance);
+            foreach(var hit in hits)
+            {
+                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
+                {
+                    result.Add(res);
+                }
+            }
+
+            return result.Count > 0;
+        }
+
         public static bool IsValueInRange(float minInclude, float maxExclude, float value)
         {
             return value >= minInclude && value < maxExclude;
         }
 
+        public static bool IsDistanceIsNear(Vector3 start, Vector3 end)
+        {
+            //Debug.LogError("Dis: " + Vector3.Distance(start, end).ToString("0.00"));
+            return Vector3.Distance(start, end) <= 0.9f;
+        }
+
+        public static Vector3 GetPointWithMaxDistance(TwoPoints point, float maxDistance)
+        {
+            NavMeshPath path = point.GetPath();
+            return GetPointWithMaxDistance(path, maxDistance);
+        }
+
+        public static Vector3 GetPointWithMaxDistance(NavMeshPath path, float maxDistance)
+        {
+
+            if(path.corners.Length == 0)
+                return Vector3.zero;
+
+            if(path.corners.Length == 1)
+                return path.corners[0];
+
+            float len = 0f;
+
+            for(int i = 1; i < path.corners.Length; i++) 
+                len += Vector3.Distance(path.corners[i], path.corners[i-1]);
+        
+  
+            float d = 0f;
+            for(int i = 1; i < path.corners.Length; i++)
+            {
+                float distanceBetweenPoints = d + Vector3.Distance(path.corners[i], path.corners[i-1]);
+                if(maxDistance < d + distanceBetweenPoints)
+                {
+                   float  t = (maxDistance - d) / distanceBetweenPoints; 
+                    return Vector3.Lerp(path.corners[i-1], path.corners[i], t);
+                }
+                d += distanceBetweenPoints;
+            }
+        
+            return path.corners[path.corners.Length - 1];
+        }
+
         public static class BezierCurveHelper
         {
-            public static Vector2 Interpolate(Vector2 start, Vector2 control, Vector2 end, float t)
+            public static Vector3 Interpolate(Vector3 start, Vector3 control, Vector3 end, float t)
             {
-                Vector2 point = (((1 - t) * (1 - t)) * start) + ((2 * (1 - t) * t) * control) + (t * t * end);
+                Vector3 point = (((1 - t) * (1 - t)) * start) + ((2 * (1 - t) * t) * control) + (t * t * end);
                 return point;
             }
 
-            public static List<Vector2> GetCurvePoints(Vector2 start, Vector2 control, Vector2 end, int resolution)
+            public static List<Vector3> GetCurvePoints(Vector3 start, Vector3 control, Vector3 end, int resolution)
             {
                 if (resolution < 5)
                     throw new System.ArgumentException("Please provide a positive, non-zero resolution.");
 
-                List<Vector2> tempList = new List<Vector2>();
+                List<Vector3> tempList = new List<Vector3>();
 
                 float timeStep = 1.0f / resolution;
                 for (int i = 0; i <= resolution; i++)
@@ -95,9 +424,14 @@ namespace EVI
             }
         }
 
-        public static class CutmullRomCurveHelper
+        public static string MarkText(string text, Color color)
         {
-            public static Vector2 Interpolate(Vector2 start, Vector2 end, Vector2 tanPoint1, Vector2 tanPoint2, float t)
+            return string.Format("<color=" + color.ToHexString() + ">" + text + "</color>");
+        }
+
+        public static class CatmullRomCurveHelper
+        {
+            public static Vector3 Interpolate(Vector3 start, Vector3 end, Vector3 tanPoint1, Vector3 tanPoint2, float t)
             {
                 // Catmull-Rom splines are Hermite curves with special tangent values.
                 // Hermite curve formula:
@@ -113,10 +447,10 @@ namespace EVI
                 return position;
             }
 
-            public static Vector2 Interpolate(Vector2 start, Vector2 end, Vector2 tanPoint1, Vector2 tanPoint2, float t, out Vector3 tangent)
+            public static Vector3 Interpolate(Vector3 start, Vector3 end, Vector3 tanPoint1, Vector3 tanPoint2, float t, out Vector3 tangent)
             {
                 // Calculate tangents
-                // p'(t) = (6t² - 6t)p0 + (3t² - 4t + 1)m0 + (-6t² + 6t)p1 + (3t² - 2t)m1
+                // p'(t) = (6tï¿½ - 6t)p0 + (3tï¿½ - 4t + 1)m0 + (-6tï¿½ + 6t)p1 + (3tï¿½ - 2t)m1
                 tangent = (6 * t * t - 6 * t) * start
                     + (3 * t * t - 4 * t + 1) * tanPoint1
                     + (-6 * t * t + 6 * t) * end
@@ -124,7 +458,7 @@ namespace EVI
                 return Interpolate(start, end, tanPoint1, tanPoint2, t);
             }
 
-            public static Vector2 Interpolate(Vector2 start, Vector2 end, Vector2 tanPoint1, Vector2 tanPoint2, float t, out Vector3 tangent, out Vector2 curvature)
+            public static Vector3 Interpolate(Vector3 start, Vector3 end, Vector3 tanPoint1, Vector3 tanPoint2, float t, out Vector3 tangent, out Vector3 curvature)
             {
                 // Calculate second derivative (curvature)
                 // p''(t) = (12t - 6)p0 + (6t - 4)m0 + (-12t + 6)p1 + (6t - 2)m1
@@ -136,17 +470,17 @@ namespace EVI
 
             }
 
-            public static List<Vector2> GetCoordinates(List<Vector2> points, int curveResolution, bool ClosedLoop)
+            public static List<Vector3> GetCoordinates(List<Vector3> points, int curveResolution, bool ClosedLoop)
             {
                 if (points == null || points.Count < 2 || curveResolution < 5)
                     return null;
 
-                Vector2[] temp;
+                Vector3[] temp;
 
-                Vector2 p0;
-                Vector2 p1;
-                Vector2 m0;
-                Vector2 m1;
+                Vector3 p0;
+                Vector3 p1;
+                Vector3 m0;
+                Vector3 m1;
                 int pointsToMake;
 
                 if (ClosedLoop == true)
@@ -158,7 +492,7 @@ namespace EVI
                     pointsToMake = (curveResolution) * (points.Count - 1);
                 }
 
-                temp = new Vector2[pointsToMake];
+                temp = new Vector3[pointsToMake];
 
                 int closedAdjustment = ClosedLoop ? 0 : 1;
 
@@ -216,7 +550,7 @@ namespace EVI
                     for (int j = 0; j < curveResolution; j++)
                     {
                         t = j * pointStep;
-                        position = Helper.CutmullRomCurveHelper.Interpolate(p0, p1, m0, m1, t);
+                        position = Helper.CatmullRomCurveHelper.Interpolate(p0, p1, m0, m1, t);
                         temp[i * curveResolution + j] = position;
                     }
                 }

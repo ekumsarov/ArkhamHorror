@@ -25,16 +25,6 @@ public class Test : MonoBehaviour
 
     IEnumerator Moving(BaseModel model)
     {
-        model.MoveTo(new Vector2(2f, 1f));
-        yield return new WaitForSeconds(2f);
-        model.Rotate(70f);
-        model.MoveTo(new Vector2(3f, 0f));
-        yield return new WaitForSeconds(2f);
-        model.Rotate(0f);
-        model.MoveTo(new Vector2(0f, 0f));
-        yield return new WaitForSeconds(2f);
-        model.Rotate(-37f);
-        model.MoveTo(new Vector2(1f, 1f));
 
         yield return null;
     }

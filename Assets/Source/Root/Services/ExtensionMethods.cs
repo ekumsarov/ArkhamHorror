@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.AI;
+using NUnit.Framework;
 
 public static class ExtensionMethods
 {
@@ -86,9 +88,29 @@ public static class ExtensionMethods
         vector = new Vector3(x, vector.y, vector.z);
     }
 
+    public static void AddX(ref this Vector3 vector, float x)
+    {
+        vector = new Vector3(vector.x + x, vector.y, vector.z);
+    }
+
     public static Vector3 SetY(this Vector3 vector, float y)
     {
         return new Vector3(vector.x, y, vector.z);
+    }
+
+    public static void AddY(ref this Vector3 vector, float y)
+    {
+        vector = new Vector3(vector.x, vector.y + y, vector.z);
+    }
+
+    public static Vector3 SetZ(this Vector3 vector, float z)
+    {
+        return new Vector3(vector.x, vector.y, z);
+    }
+
+    public static void AddZ(ref this Vector3 vector, float z)
+    {
+        vector = new Vector3(vector.x, vector.y, vector.z + z);
     }
 
     public static Vector3 Absolute(this Vector3 vector)
@@ -104,6 +126,12 @@ public static class ExtensionMethods
     public static T Last<T>(this List<T> list)
     {
         return list[list.Count - 1];
+    }
+
+    public static List<T> RemoveLast<T>(this List<T> list)
+    {
+        list.RemoveAt(list.Count - 1);
+        return list;
     }
 
     public static int LastIndex<T>(this List<T> list)
@@ -126,6 +154,15 @@ public static class ExtensionMethods
     }
     #endregion
 
+    public static float Distance(this NavMeshPath path)
+    {
+        float lengthSoFar = 0.0f;
+        for (int i = 1; i < path.corners.Length; i++) {
+            lengthSoFar += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+        }
+        return lengthSoFar;
+    }
+
     #region RectTransform
     public static void SetX(this RectTransform vector, float x)
     {
@@ -139,6 +176,21 @@ public static class ExtensionMethods
         Vector3 v = vector.localPosition;
         v.x = x;
         vector.localPosition = v;
+    }
+
+    public static bool IsInRange(this IList list, int value)
+    {
+        return value < list.Count && value >= 0;
+    }
+
+    public static void SetAlpha(this Color color, float a)
+    {
+        color = new Color(color.r, color.g, color.b, a);
+    }
+
+    public static Color InstallAlpha(this Color color, float a)
+    {
+        return new Color(color.r, color.g, color.b, a);
     }
     #endregion
 }

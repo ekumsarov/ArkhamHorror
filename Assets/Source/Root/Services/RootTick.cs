@@ -4,11 +4,15 @@ using Zenject;
 
 namespace EVI
 {
-    public class RootTick : IInitializable, ITickable, IRegystryRoot
+    public class RootTick : IInitializable, ITickable, IRegystryRoot, IFixedTickable
     {
         private List<IUpdatable> _updateList;
         private List<IUpdatable> _safeUpdate;
         private List<IUpdatable> _safeDelete;
+
+        private List<IFixedUpdatable> _updateFixedList;
+        private List<IFixedUpdatable> _safeFixedUpdate;
+        private List<IFixedUpdatable> _safeFixedDelete;
 
         private float _deltaTime;
 
@@ -24,6 +28,15 @@ namespace EVI
 
             if (_safeDelete == null)
                 _safeDelete = new List<IUpdatable>();
+
+            if (_updateFixedList == null)
+                _updateFixedList = new List<IFixedUpdatable>();
+
+            if (_safeFixedDelete == null)
+                _safeFixedDelete = new List<IFixedUpdatable>();
+
+            if (_safeFixedUpdate == null)
+                _safeFixedUpdate = new List<IFixedUpdatable>();
         }
 
         public void Tick()
@@ -72,6 +85,52 @@ namespace EVI
                 return;
 
             _safeDelete.Add(updatable);
+        }
+
+        public void RegistryFixed(IFixedUpdatable updatable)
+        {
+            if (_updateFixedList == null)
+                _updateFixedList = new List<IFixedUpdatable>();
+
+            if (_updateFixedList.Contains(updatable))
+                return;
+
+            if (_safeFixedUpdate == null)
+                _safeFixedUpdate = new List<IFixedUpdatable>();
+
+            if (_safeFixedUpdate.Contains(updatable))
+                return;
+
+            _safeFixedUpdate.Add(updatable);
+        }
+
+        public void UnregisrtyFixed(IFixedUpdatable updatable)
+        {
+            if (_safeFixedDelete == null)
+                _safeFixedDelete = new List<IFixedUpdatable>();
+
+            if (_safeFixedDelete.Contains(updatable) || _updateFixedList.Contains(updatable) == false)
+                return;
+
+            _safeFixedDelete.Add(updatable);
+        }
+
+        public void FixedTick()
+        {
+            foreach (var temp in _safeFixedUpdate)
+            {
+                _updateFixedList.Add(temp);
+            }
+            _safeFixedUpdate.Clear();
+
+            foreach (var temp in _safeFixedDelete)
+            {
+                _updateFixedList.Remove(temp);
+            }
+            _safeFixedDelete.Clear();
+
+            foreach (var temp in _updateFixedList)
+                temp.FixedTick();
         }
     }
 }
