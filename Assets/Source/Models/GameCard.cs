@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EVI.Game
 {
-    [JSONSerializable]
+    [JSONSerializable, CreateAssetMenu(menuName = "Models/Card")]
     public class GameCard : BaseModel
     {
         [SerializeField, JSONConvert]

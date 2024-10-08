@@ -1,89 +1,78 @@
+using EVI.DDSystem;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace EVI
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class InterectableView : BaseView
+    public class InteractableView : BaseView, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
+        [Inject] private readonly CameraHandler _camera;
+
         [SerializeField, FoldoutGroup("Interactive")] private bool _isInteractable;
         [SerializeField, FoldoutGroup("Interactive")] private bool _isButton;
         [SerializeField, FoldoutGroup("Interactive")] private bool _isDraggable;
-        
-        [SerializeField, ReadOnly, OnInspectorInit("OnInspector")] private BoxCollider2D _collider;
-        private void OnInspector()
+
+        [SerializeField, ReadOnly, OnInspectorInit("InitializeCollider")] private BoxCollider2D _collider;
+
+        private bool _isDragging = false;
+        private float _timeStamp = 0f;
+
+        public event Action<InteractableView> StopDrag;
+        public event Action OnClick;
+
+        private void InitializeCollider()
         {
             if (_collider == null)
                 _collider = GetComponent<BoxCollider2D>();
         }
 
-        private bool _isDraging = false;
-        private float _timeStamp = 0f;
-
-        public void OnMouseDown()
+        public void OnPointerDown(PointerEventData eventData)
         {
-            if (_isInteractable == false)
+            if (!_isInteractable)
                 return;
 
             _timeStamp = Time.time;
         }
 
-        public void OnMouseUp()
+        public void OnPointerUp(PointerEventData eventData)
         {
-            if (_isInteractable == false)
+            if (!_isInteractable)
                 return;
 
-            if(_isDraging)
+            if (_isDragging)
             {
-                _isDraging = false;
-                _timeStamp = 0f;
+                _isDragging = false;
                 StopDrag?.Invoke(this);
-                return;
             }
-
-            if (Time.time - _timeStamp < 0.2f)
+            else if (Time.time - _timeStamp < 0.2f && _isButton)
             {
-                StopCoroutine("OnMouseDrag");
-                if (_isButton)
-                {
-                    OnClick?.Invoke();
-                }
+                OnClick?.Invoke();
             }
 
-            _isDraging = false;
             _timeStamp = 0f;
         }
 
-        public IEnumerator OnMouseDrag()
+        public void OnDrag(PointerEventData eventData)
         {
-            if (_isInteractable == false || _isDraggable == false)
-                yield break;
+            if (!_isInteractable || !_isDraggable)
+                return;
 
-            float delta = Time.time - _timeStamp;
-            while (delta < 0.2f)
+            if (Time.time - _timeStamp >= 0.2f)
             {
-                delta = Time.time - _timeStamp;
-                yield return null;
-            }
-
-            _isDraging = true;
-            yield return null;
-
-            while (_isDraging)
-            {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Position;
-                SetPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition).SetZ(0));
-
-                yield return null;
+                _isDragging = true;
+                DragItem(eventData);
             }
         }
 
-        public Action<InterectableView> StopDrag;
-        public Action OnClick;
+        private void DragItem(PointerEventData eventData)
+        {
+            Vector3 mousePosition = _camera.Camera.ScreenToWorldPoint(eventData.position);
+            SetPosition(mousePosition.SetZ(0));
+        }
     }
 }

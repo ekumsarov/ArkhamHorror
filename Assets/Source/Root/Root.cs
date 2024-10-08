@@ -17,8 +17,6 @@ public class Root : MonoBehaviour, IInitializable
     [Inject] private readonly Instatinator _instatinator;
     [Inject] private readonly CameraHandler _camera;
 
-    private int count = 0;
-
     public void Init()
     {
     }

@@ -27,7 +27,7 @@ public abstract class AutoFindMB : MonoBehaviour
         foreach (var field in fields)
         {
             var attribute = field.GetCustomAttribute<AutoFindComponentAttribute>();
-            if (attribute != null && field.GetValue(this) == null)
+            if (attribute != null)
             {
                 Type fieldType = field.FieldType;
 

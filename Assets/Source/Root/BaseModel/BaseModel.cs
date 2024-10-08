@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
-using Zenject;
+using Sirenix.OdinInspector;
 
 namespace EVI
 {
     [JSONSerializable]
-    public class BaseModel : SOBindable
+    public class BaseModel : SOBindable, IIdentifiable
     {
+        public string ID => name;
     }
 }
