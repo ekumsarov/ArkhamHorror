@@ -9,6 +9,10 @@ namespace EVI
     [JSONSerializable]
     public class BaseView : BindableView
     {
+        [SerializeField, OnInspectorInit("BaseViewComponents")] private SpriteRenderer _sprite;
+
+        public Bounds Bounds => _sprite.bounds;
+
         [BindTo]
         public void SetRotation(float angle)
         {
@@ -31,6 +35,14 @@ namespace EVI
             transform.position = pos;
         }
 
+        private void BaseViewComponents()
+        {
+            if(_sprite == null)
+                _sprite = GetComponent<SpriteRenderer>();
+        }
+
         public Vector3 Position => transform.position;
+
+
     }
 }

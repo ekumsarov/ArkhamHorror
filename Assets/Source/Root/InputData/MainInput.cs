@@ -64,6 +64,15 @@ namespace EVI.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PointerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""287a9345-b217-40a0-a7d9-ca9e3c5a65d0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -108,6 +117,17 @@ namespace EVI.Inputs
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Invenory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84ab7fad-7a26-416f-b1b9-009ed641e546"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PointerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -361,253 +381,6 @@ namespace EVI.Inputs
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""BattleMap"",
-            ""id"": ""7c8d6e51-cde5-449a-9e58-6d4a4edfd795"",
-            ""actions"": [
-                {
-                    ""name"": ""CameraRotate"",
-                    ""type"": ""Value"",
-                    ""id"": ""8ae9e661-5aa1-4910-aa47-dcd9aa799fe2"",
-                    ""expectedControlType"": ""Delta"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ClickLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""171938c2-2bbe-4372-ab36-0b5c835bb867"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ClickRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""f2932f32-d785-42d6-a3a6-2a88cef22742"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""CameraContol"",
-                    ""type"": ""Value"",
-                    ""id"": ""8bcf8e73-75f5-481a-8e85-7a617bcb4eca"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""CursorPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""09eee389-1a22-49bd-993f-d7ae6ac3f03b"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""CancelButton"",
-                    ""type"": ""Button"",
-                    ""id"": ""cdf92b2b-5452-4cd1-b33f-6b4eb7de953a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""NextUnit"",
-                    ""type"": ""Button"",
-                    ""id"": ""b7ef638e-3213-4a35-b17c-ba37a4b1b505"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""cf84065c-ef4f-4f02-80a7-652a99c9bb9d"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraContol"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""131a545d-a401-4b56-bce5-24b4f1a5d17f"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraContol"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""5bbb9565-5586-40d4-914d-1d567f5af4b5"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraContol"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""cd686c1e-c166-4e85-8566-f4722ae28c84"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraContol"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""4ce914b7-ded6-400a-af57-d7f876e26e08"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraContol"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b64f0f12-284a-4d14-8349-4fa4013d8d8e"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Main"",
-                    ""action"": ""ClickLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Scroller"",
-                    ""id"": ""84f8afb9-2f6f-4587-8b7a-917a98a509e6"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""41d060f5-24b1-44a8-ae89-b81961a39f0d"",
-                    ""path"": ""<Mouse>/middleButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""a24f8478-55f3-45d3-8738-12e6243734cf"",
-                    ""path"": ""<Mouse>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""CTR"",
-                    ""id"": ""11d84a77-65a3-48c9-9797-5067cca32781"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""6d4df77a-43a5-4b3a-8395-c3aa507fe8fc"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""a3e837fe-eb43-4748-9720-e134a4a50d03"",
-                    ""path"": ""<Mouse>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2ba1c0be-e409-4b43-a3a3-fac59f6b3baf"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Main"",
-                    ""action"": ""ClickRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""860cb355-77b7-4aa5-9736-9295c6176bb7"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CursorPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e4308674-bcd4-4732-aa50-1c3ac208f2dd"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CancelButton"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""016724f9-bb27-4b4a-a47c-532c4b71018c"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NextUnit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": [
@@ -624,6 +397,7 @@ namespace EVI.Inputs
             m_MainMap_CrouchButton = m_MainMap.FindAction("CrouchButton", throwIfNotFound: true);
             m_MainMap_SelectNextUnit = m_MainMap.FindAction("SelectNextUnit", throwIfNotFound: true);
             m_MainMap_Invenory = m_MainMap.FindAction("Invenory", throwIfNotFound: true);
+            m_MainMap_PointerPosition = m_MainMap.FindAction("PointerPosition", throwIfNotFound: true);
             // CameraMap
             m_CameraMap = asset.FindActionMap("CameraMap", throwIfNotFound: true);
             m_CameraMap_CameraContol = m_CameraMap.FindAction("CameraContol", throwIfNotFound: true);
@@ -632,15 +406,6 @@ namespace EVI.Inputs
             m_CameraMap_ZoomOut = m_CameraMap.FindAction("ZoomOut", throwIfNotFound: true);
             m_CameraMap_CameraRotateRight = m_CameraMap.FindAction("CameraRotateRight", throwIfNotFound: true);
             m_CameraMap_CameraRotateLeft = m_CameraMap.FindAction("CameraRotateLeft", throwIfNotFound: true);
-            // BattleMap
-            m_BattleMap = asset.FindActionMap("BattleMap", throwIfNotFound: true);
-            m_BattleMap_CameraRotate = m_BattleMap.FindAction("CameraRotate", throwIfNotFound: true);
-            m_BattleMap_ClickLeft = m_BattleMap.FindAction("ClickLeft", throwIfNotFound: true);
-            m_BattleMap_ClickRight = m_BattleMap.FindAction("ClickRight", throwIfNotFound: true);
-            m_BattleMap_CameraContol = m_BattleMap.FindAction("CameraContol", throwIfNotFound: true);
-            m_BattleMap_CursorPosition = m_BattleMap.FindAction("CursorPosition", throwIfNotFound: true);
-            m_BattleMap_CancelButton = m_BattleMap.FindAction("CancelButton", throwIfNotFound: true);
-            m_BattleMap_NextUnit = m_BattleMap.FindAction("NextUnit", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -706,6 +471,7 @@ namespace EVI.Inputs
         private readonly InputAction m_MainMap_CrouchButton;
         private readonly InputAction m_MainMap_SelectNextUnit;
         private readonly InputAction m_MainMap_Invenory;
+        private readonly InputAction m_MainMap_PointerPosition;
         public struct MainMapActions
         {
             private @MainInput m_Wrapper;
@@ -714,6 +480,7 @@ namespace EVI.Inputs
             public InputAction @CrouchButton => m_Wrapper.m_MainMap_CrouchButton;
             public InputAction @SelectNextUnit => m_Wrapper.m_MainMap_SelectNextUnit;
             public InputAction @Invenory => m_Wrapper.m_MainMap_Invenory;
+            public InputAction @PointerPosition => m_Wrapper.m_MainMap_PointerPosition;
             public InputActionMap Get() { return m_Wrapper.m_MainMap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -735,6 +502,9 @@ namespace EVI.Inputs
                 @Invenory.started += instance.OnInvenory;
                 @Invenory.performed += instance.OnInvenory;
                 @Invenory.canceled += instance.OnInvenory;
+                @PointerPosition.started += instance.OnPointerPosition;
+                @PointerPosition.performed += instance.OnPointerPosition;
+                @PointerPosition.canceled += instance.OnPointerPosition;
             }
 
             private void UnregisterCallbacks(IMainMapActions instance)
@@ -751,6 +521,9 @@ namespace EVI.Inputs
                 @Invenory.started -= instance.OnInvenory;
                 @Invenory.performed -= instance.OnInvenory;
                 @Invenory.canceled -= instance.OnInvenory;
+                @PointerPosition.started -= instance.OnPointerPosition;
+                @PointerPosition.performed -= instance.OnPointerPosition;
+                @PointerPosition.canceled -= instance.OnPointerPosition;
             }
 
             public void RemoveCallbacks(IMainMapActions instance)
@@ -854,100 +627,6 @@ namespace EVI.Inputs
             }
         }
         public CameraMapActions @CameraMap => new CameraMapActions(this);
-
-        // BattleMap
-        private readonly InputActionMap m_BattleMap;
-        private List<IBattleMapActions> m_BattleMapActionsCallbackInterfaces = new List<IBattleMapActions>();
-        private readonly InputAction m_BattleMap_CameraRotate;
-        private readonly InputAction m_BattleMap_ClickLeft;
-        private readonly InputAction m_BattleMap_ClickRight;
-        private readonly InputAction m_BattleMap_CameraContol;
-        private readonly InputAction m_BattleMap_CursorPosition;
-        private readonly InputAction m_BattleMap_CancelButton;
-        private readonly InputAction m_BattleMap_NextUnit;
-        public struct BattleMapActions
-        {
-            private @MainInput m_Wrapper;
-            public BattleMapActions(@MainInput wrapper) { m_Wrapper = wrapper; }
-            public InputAction @CameraRotate => m_Wrapper.m_BattleMap_CameraRotate;
-            public InputAction @ClickLeft => m_Wrapper.m_BattleMap_ClickLeft;
-            public InputAction @ClickRight => m_Wrapper.m_BattleMap_ClickRight;
-            public InputAction @CameraContol => m_Wrapper.m_BattleMap_CameraContol;
-            public InputAction @CursorPosition => m_Wrapper.m_BattleMap_CursorPosition;
-            public InputAction @CancelButton => m_Wrapper.m_BattleMap_CancelButton;
-            public InputAction @NextUnit => m_Wrapper.m_BattleMap_NextUnit;
-            public InputActionMap Get() { return m_Wrapper.m_BattleMap; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(BattleMapActions set) { return set.Get(); }
-            public void AddCallbacks(IBattleMapActions instance)
-            {
-                if (instance == null || m_Wrapper.m_BattleMapActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_BattleMapActionsCallbackInterfaces.Add(instance);
-                @CameraRotate.started += instance.OnCameraRotate;
-                @CameraRotate.performed += instance.OnCameraRotate;
-                @CameraRotate.canceled += instance.OnCameraRotate;
-                @ClickLeft.started += instance.OnClickLeft;
-                @ClickLeft.performed += instance.OnClickLeft;
-                @ClickLeft.canceled += instance.OnClickLeft;
-                @ClickRight.started += instance.OnClickRight;
-                @ClickRight.performed += instance.OnClickRight;
-                @ClickRight.canceled += instance.OnClickRight;
-                @CameraContol.started += instance.OnCameraContol;
-                @CameraContol.performed += instance.OnCameraContol;
-                @CameraContol.canceled += instance.OnCameraContol;
-                @CursorPosition.started += instance.OnCursorPosition;
-                @CursorPosition.performed += instance.OnCursorPosition;
-                @CursorPosition.canceled += instance.OnCursorPosition;
-                @CancelButton.started += instance.OnCancelButton;
-                @CancelButton.performed += instance.OnCancelButton;
-                @CancelButton.canceled += instance.OnCancelButton;
-                @NextUnit.started += instance.OnNextUnit;
-                @NextUnit.performed += instance.OnNextUnit;
-                @NextUnit.canceled += instance.OnNextUnit;
-            }
-
-            private void UnregisterCallbacks(IBattleMapActions instance)
-            {
-                @CameraRotate.started -= instance.OnCameraRotate;
-                @CameraRotate.performed -= instance.OnCameraRotate;
-                @CameraRotate.canceled -= instance.OnCameraRotate;
-                @ClickLeft.started -= instance.OnClickLeft;
-                @ClickLeft.performed -= instance.OnClickLeft;
-                @ClickLeft.canceled -= instance.OnClickLeft;
-                @ClickRight.started -= instance.OnClickRight;
-                @ClickRight.performed -= instance.OnClickRight;
-                @ClickRight.canceled -= instance.OnClickRight;
-                @CameraContol.started -= instance.OnCameraContol;
-                @CameraContol.performed -= instance.OnCameraContol;
-                @CameraContol.canceled -= instance.OnCameraContol;
-                @CursorPosition.started -= instance.OnCursorPosition;
-                @CursorPosition.performed -= instance.OnCursorPosition;
-                @CursorPosition.canceled -= instance.OnCursorPosition;
-                @CancelButton.started -= instance.OnCancelButton;
-                @CancelButton.performed -= instance.OnCancelButton;
-                @CancelButton.canceled -= instance.OnCancelButton;
-                @NextUnit.started -= instance.OnNextUnit;
-                @NextUnit.performed -= instance.OnNextUnit;
-                @NextUnit.canceled -= instance.OnNextUnit;
-            }
-
-            public void RemoveCallbacks(IBattleMapActions instance)
-            {
-                if (m_Wrapper.m_BattleMapActionsCallbackInterfaces.Remove(instance))
-                    UnregisterCallbacks(instance);
-            }
-
-            public void SetCallbacks(IBattleMapActions instance)
-            {
-                foreach (var item in m_Wrapper.m_BattleMapActionsCallbackInterfaces)
-                    UnregisterCallbacks(item);
-                m_Wrapper.m_BattleMapActionsCallbackInterfaces.Clear();
-                AddCallbacks(instance);
-            }
-        }
-        public BattleMapActions @BattleMap => new BattleMapActions(this);
         private int m_MainSchemeIndex = -1;
         public InputControlScheme MainScheme
         {
@@ -963,6 +642,7 @@ namespace EVI.Inputs
             void OnCrouchButton(InputAction.CallbackContext context);
             void OnSelectNextUnit(InputAction.CallbackContext context);
             void OnInvenory(InputAction.CallbackContext context);
+            void OnPointerPosition(InputAction.CallbackContext context);
         }
         public interface ICameraMapActions
         {
@@ -972,16 +652,6 @@ namespace EVI.Inputs
             void OnZoomOut(InputAction.CallbackContext context);
             void OnCameraRotateRight(InputAction.CallbackContext context);
             void OnCameraRotateLeft(InputAction.CallbackContext context);
-        }
-        public interface IBattleMapActions
-        {
-            void OnCameraRotate(InputAction.CallbackContext context);
-            void OnClickLeft(InputAction.CallbackContext context);
-            void OnClickRight(InputAction.CallbackContext context);
-            void OnCameraContol(InputAction.CallbackContext context);
-            void OnCursorPosition(InputAction.CallbackContext context);
-            void OnCancelButton(InputAction.CallbackContext context);
-            void OnNextUnit(InputAction.CallbackContext context);
         }
     }
 }

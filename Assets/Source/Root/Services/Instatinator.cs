@@ -2,6 +2,7 @@ using UnityEngine;
 using Zenject;
 using System;
 using SimpleJSON;
+using Sirenix.OdinInspector;
 
 namespace EVI
 {
@@ -84,7 +85,7 @@ namespace EVI
                 throw new ArgumentException("Cannot find such model" + temp.ToString());
             }
 
-            obj.Init((data));
+            obj.Init(data);
             _container.QueueForInject(temp);
 
             return temp;

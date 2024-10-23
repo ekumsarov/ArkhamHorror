@@ -12,12 +12,12 @@ namespace EVI
     {
         protected override BindableView Instance() => this;
 
-        private IBindable _model;
-        protected IBindable Model => _model;
+        private IBindable _bindableModel;
+        protected IBindable BindableModel => _bindableModel;
 
         protected override void InitializeBase(IBindable bindableModel)
         {
-            _model = bindableModel;
+            _bindableModel = bindableModel;
             Bind();
             BindProcess();
             InitializeBaseInternal();
@@ -35,7 +35,7 @@ namespace EVI
         public void Bind()
         {
             Type myType = this.GetType();
-            List<string> keys = _model.GetBinds;
+            List<string> keys = _bindableModel.GetBinds;
             foreach(var method in myType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
                 | System.Reflection.BindingFlags.Public | BindingFlags.Default))
             {
@@ -53,14 +53,14 @@ namespace EVI
                         {
                             var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
 
-                            _model.AddListiner(key, genericDelegate);
+                            _bindableModel.AddListiner(key, genericDelegate);
                         }
                         else
                         {
                             var delegateType = typeof(Action<>).MakeGenericType(parameterType);
                             var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
 
-                            _model.AddListiner(key, genericDelegate);
+                            _bindableModel.AddListiner(key, genericDelegate);
                         }
                     }
                 }
@@ -85,14 +85,14 @@ namespace EVI
                         {
                             var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
 
-                            _model.AddListiner(key, genericDelegate);
+                            _bindableModel.AddListiner(key, genericDelegate);
                         }
                         else
                         {
                             var delegateType = typeof(Action<>).MakeGenericType(parameterType);
                             var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
 
-                            _model.AddListiner(key, genericDelegate);
+                            _bindableModel.AddListiner(key, genericDelegate);
                         }
                     }
                 }
@@ -102,7 +102,7 @@ namespace EVI
         public void Unbind()
         {
             Type myType = this.GetType();
-            List<string> keys = _model.GetBinds;
+            List<string> keys = _bindableModel.GetBinds;
             foreach (var method in myType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
                 | System.Reflection.BindingFlags.Public | BindingFlags.Default))
             {
@@ -120,14 +120,14 @@ namespace EVI
                         {
                             var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
 
-                            _model.RemoveListener(key, genericDelegate);
+                            _bindableModel.RemoveListener(key, genericDelegate);
                         }
                         else
                         {
                             var delegateType = typeof(Action<>).MakeGenericType(parameterType);
                             var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
 
-                            _model.RemoveListener(key, genericDelegate);
+                            _bindableModel.RemoveListener(key, genericDelegate);
                         }
                     }
                 }
@@ -150,14 +150,14 @@ namespace EVI
                         {
                             var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
 
-                            _model.RemoveListener(key, genericDelegate);
+                            _bindableModel.RemoveListener(key, genericDelegate);
                         }
                         else
                         {
                             var delegateType = typeof(Action<>).MakeGenericType(parameterType);
                             var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
 
-                            _model.RemoveListener(key, genericDelegate);
+                            _bindableModel.RemoveListener(key, genericDelegate);
                         }
                     }
                 }
@@ -184,7 +184,7 @@ namespace EVI
                 _fields.Add(field.Name, new Callback(field.Name));
             }
 
-            Type modelType = _model.GetType();
+            Type modelType = _bindableModel.GetType();
             foreach(var method in modelType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
                 | System.Reflection.BindingFlags.Public | BindingFlags.Default))
             {
@@ -200,14 +200,14 @@ namespace EVI
                         var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
                         if (parameterType == null)
                         {
-                            var genericDelegate = Delegate.CreateDelegate(typeof(Action), _model, method);
+                            var genericDelegate = Delegate.CreateDelegate(typeof(Action), _bindableModel, method);
 
                             AddListener(key, genericDelegate);
                         }
                         else
                         {
                             var delegateType = typeof(Action<>).MakeGenericType(parameterType);
-                            var genericDelegate = Delegate.CreateDelegate(delegateType, _model, method);
+                            var genericDelegate = Delegate.CreateDelegate(delegateType, _bindableModel, method);
 
                             AddListener(key, genericDelegate);
                         }

@@ -3,10 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
+using Sirenix.OdinInspector;
+using UnityEditor;
+using NUnit.Framework;
+using System;
 
 public class Test : MonoBehaviour
 {
+    [SerializeField, ValueDropdown("@EVI.TypeSelector.GetAllTypeIDs()")] public List<string> _cardID;
     public CultistView CultistView;
+
+    private string _id = "help";
 
     private void Start()
     {

@@ -5,8 +5,11 @@ using UnityEngine;
 namespace EVI.Game
 {
     [JSONSerializable, CreateAssetMenu(menuName = "Models/Card")]
-    public class GameCard : BaseModel
+    public class GameCard : TypedModel<GameCardView>
     {
+        [SerializeField, JSONConvert] private GameObject _prefab;
+        public GameObject Prefab => _prefab;
+
         [SerializeField, JSONConvert]
         private CardType _cardType; 
 

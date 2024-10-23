@@ -9,9 +9,9 @@ using Zenject;
 namespace EVI
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class InteractableView : BaseView, IPointerDownHandler, IPointerUpHandler, IDragHandler
+    public class InteractableView : MonoBehaviour, IInteractable
     {
-        [Inject] private readonly CameraHandler _camera;
+        private CameraHandler _camera;
 
         [SerializeField, FoldoutGroup("Interactive")] private bool _isInteractable;
         [SerializeField, FoldoutGroup("Interactive")] private bool _isButton;
@@ -20,10 +20,9 @@ namespace EVI
         [SerializeField, ReadOnly, OnInspectorInit("InitializeCollider")] private BoxCollider2D _collider;
 
         private bool _isDragging = false;
-        private float _timeStamp = 0f;
 
-        public event Action<InteractableView> StopDrag;
-        public event Action OnClick;
+        public bool IsDraggable => _isDraggable;
+        public bool IsButton => _isButton;
 
         private void InitializeCollider()
         {
@@ -31,48 +30,63 @@ namespace EVI
                 _collider = GetComponent<BoxCollider2D>();
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void Initialize(CameraHandler camera)
+        {
+            _camera = camera;
+        }
+
+        public void HandleClick() 
         {
             if (!_isInteractable)
                 return;
 
-            _timeStamp = Time.time;
+            Debug.LogError("Clicked");
+
+            OnClick?.Invoke();
         }
 
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            if (!_isInteractable)
-                return;
-
-            if (_isDragging)
-            {
-                _isDragging = false;
-                StopDrag?.Invoke(this);
-            }
-            else if (Time.time - _timeStamp < 0.2f && _isButton)
-            {
-                OnClick?.Invoke();
-            }
-
-            _timeStamp = 0f;
-        }
-
-        public void OnDrag(PointerEventData eventData)
+        public void HandleBeginDrag()
         {
             if (!_isInteractable || !_isDraggable)
                 return;
 
-            if (Time.time - _timeStamp >= 0.2f)
+            _isDragging = true;
+            OnBeginDrag?.Invoke();
+        }
+
+        public void HandleDrag(Vector2 mousePosition)
+        {
+            if (!_isInteractable || !_isDraggable)
+                return;
+
+            Debug.LogError("IsDragging");
+
+            if(OnDrag != null)
             {
-                _isDragging = true;
-                DragItem(eventData);
+                OnDrag.Invoke();
+                return;
+            }
+
+            DragItem(mousePosition);
+        }
+
+        public void HandleEndDrag()
+        {
+            if (_isDragging)
+            {
+                _isDragging = false;
+                OnEndDrag?.Invoke();
             }
         }
 
-        private void DragItem(PointerEventData eventData)
+        private void DragItem(Vector2 mouseScreenPosition)
         {
-            Vector3 mousePosition = _camera.Camera.ScreenToWorldPoint(eventData.position);
-            SetPosition(mousePosition.SetZ(0));
+            transform.position = mouseScreenPosition;
         }
+
+        public event Action OnBeginDrag;
+        public event Action OnDrag;
+        public event Action OnEndDrag;
+        public event Action OnClick;
     }
 }

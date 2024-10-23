@@ -159,7 +159,7 @@ namespace EVI
         void Update()
         {
             if (_cameraHandler == null)
-                _cameraHandler = FindObjectOfType<CameraHandler>().GetComponent<CameraHandler>();
+                _cameraHandler = FindFirstObjectByType<CameraHandler>().GetComponent<CameraHandler>();
 
             if (_manualControl)
             {

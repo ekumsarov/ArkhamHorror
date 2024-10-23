@@ -16,3 +16,10 @@ MonoBehaviour:
     _maxDay: 3
     _currentDay: 2
   _campaingName: hello
+  _mainLayout: {fileID: 11400000, guid: 5306cb4f3cb3251498973db67534cc32, type: 2}
+  _locations:
+  - {fileID: 11400000, guid: 15830dc8d1813154784e28eb570374c7, type: 2}
+  _gameCards:
+  - {fileID: 11400000, guid: 847b9bf17cbd5c94fa4f9d5a6947e2cc, type: 2}
+  - {fileID: 11400000, guid: 81ba083b05f1d44479f78f758e426644, type: 2}
+  - {fileID: 11400000, guid: 87f96e1253fdc234d96cbce8dfd16b9f, type: 2}

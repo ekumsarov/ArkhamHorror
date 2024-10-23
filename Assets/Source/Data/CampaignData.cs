@@ -1,3 +1,4 @@
+using EVI.Game;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System.Collections;
@@ -14,5 +15,14 @@ namespace EVI
 
         [SerializeField]
         private string _campaingName;
+
+        [SerializeField] private CardCell _mainLayout;
+        public CardCell MainLayout => _mainLayout;
+
+        [SerializeField] private List<Location> _locations = new List<Location>();
+        public List<Location> Locations => _locations;
+
+        [SerializeField] private List<GameCard> _gameCards = new List<GameCard>();
+        public List<GameCard> GameCards => _gameCards;
     }
 }

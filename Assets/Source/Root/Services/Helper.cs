@@ -81,277 +81,6 @@ namespace EVI
         {
             Debug.Log("x:" + vector.x.ToString() + "  y:" + vector.y.ToString() + "  z:" + vector.z.ToString());
         }
-
-        public static bool RaycastObject<T>(Ray ray, out T result)
-        {
-            result = default;
-
-            if(Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = character;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastObject<T>(Ray ray, out T result, out RaycastHit hit)
-        {
-            result = default;
-
-            if(Physics.Raycast(ray, out hit))
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = character;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastObject<T>(Vector3 start, Vector3 end, out T result)
-        {
-            result = default;
-
-            if(Physics.Raycast(start, end, out RaycastHit hit))
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = character;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastObject<T>(Vector3 start, Vector3 end, out T result, out RaycastHit hit)
-        {
-            result = default;
-
-            if(Physics.Raycast(start, end, out hit))
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = character;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastObject<T>(Vector3 start, Vector3 end, out RaycastResult<T> result)
-        {
-            result = default;
-
-            if(Physics.Raycast(start, end, out RaycastHit hit))
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = RaycastResult<T>.Create(character, hit);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastObject<T>(TwoPoints point, out RaycastResult<T> result)
-        {
-            result = default;
-            bool found = false;
-
-            RaycastHit[] hits = Physics.RaycastAll(point.Ray, point.Distance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = RaycastResult<T>.Create(character, hit);
-                    return true;
-                }
-            }
-
-            return found;
-        }
-
-        public static bool RaycastFirst<T>(Ray ray, float distance, out RaycastResult<T> result)
-        {
-            result = default;
-
-            RaycastHit[] hits = Physics.RaycastAll(ray, distance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = RaycastResult<T>.Create(character, hit);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastFirst<T>(Ray ray, out RaycastResult<T> result)
-        {
-            result = default;
-
-            RaycastHit[] hits = Physics.RaycastAll(ray);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T character))
-                {
-                    result = RaycastResult<T>.Create(character, hit);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastFirst<T>(Ray ray, float distance, out T result)
-        {
-            result = default;
-
-            RaycastHit[] hits = Physics.RaycastAll(ray, distance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
-                {
-                    result = res;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastAll<T>(TwoPoints point, float distance, out List<T> result)
-        {
-            result = new List<T>();
-
-            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
-                {
-                    result.Add(res);
-                }
-            }
-
-            return result.Count > 0;
-        }
-
-        public static bool RaycastAll<T>(TwoPoints point, float distance, out List<RaycastResult<T>> result)
-        {
-            result = new List<RaycastResult<T>>();
-
-            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
-                {
-                    result.Add(RaycastResult<T>.Create(res, hit));
-                }
-            }
-
-            return result.Count > 0;
-        }
-
-        public static bool RaycastAll<T, T2>(TwoPoints point, float distance, out List<T> result, out List<T2> result2)
-        {
-            result = new List<T>();
-            result2 = new List<T2>();
-
-            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
-                {
-                    result.Add(res);
-                }
-
-                if(hit.transform.gameObject.TryGetComponent<T2>(out T2 res2))
-                {
-                    result2.Add(res2);
-                }
-            }
-
-            return result.Count > 0;
-        }
-
-        public static bool RaycastTarget<T>(TwoPoints point, out RaycastHit hit)
-        {
-            hit = default;
-            RaycastHit[] hits = Physics.RaycastAll(point.Ray);
-            foreach(var target in hits)
-            {
-                if(target.transform.gameObject.TryGetComponent<T>(out T result))
-                {
-                    hit = target;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool RaycastNearstObject<T, T2>(TwoPoints point, float distance, out T result, out T2 result2) where T : MonoBehaviour where T2 : MonoBehaviour
-        {
-            result = null;
-            result2 = null;
-
-            float resultDistance = 1000f;
-            float resultDistance2 = 1000f;
-
-            RaycastHit[] hits = Physics.RaycastAll(point.Ray, distance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
-                {
-                    TwoPoints resultPoint = TwoPoints.Create(point.Start, hit.transform.position.SetY(2f));
-                    if(resultPoint.Distance < resultDistance)
-                    {
-                        resultDistance = resultPoint.Distance;
-                        result = res;
-                    }
-                }
-
-                if(hit.transform.gameObject.TryGetComponent<T2>(out T2 res2))
-                {
-                    TwoPoints resultPoint2 = TwoPoints.Create(point.Start, hit.transform.position.SetY(2f));
-                    if(resultPoint2.Distance < resultDistance)
-                    {
-                        resultDistance2 = resultPoint2.Distance;
-                        result2 = res2;
-                    }
-                }
-            }
-
-            return resultDistance < resultDistance2;
-        }
-
-        public static bool RaycastSphere<T>(TwoPoints points, float radius, float maxDistance, out List<T> result)
-        {
-            result = new List<T>();
-
-            RaycastHit[] hits = Physics.SphereCastAll(points.Start, radius, points.Direction, maxDistance);
-            foreach(var hit in hits)
-            {
-                if(hit.transform.gameObject.TryGetComponent<T>(out T res))
-                {
-                    result.Add(res);
-                }
-            }
-
-            return result.Count > 0;
-        }
-
         public static bool IsValueInRange(float minInclude, float maxExclude, float value)
         {
             return value >= minInclude && value < maxExclude;
@@ -372,30 +101,30 @@ namespace EVI
         public static Vector3 GetPointWithMaxDistance(NavMeshPath path, float maxDistance)
         {
 
-            if(path.corners.Length == 0)
+            if (path.corners.Length == 0)
                 return Vector3.zero;
 
-            if(path.corners.Length == 1)
+            if (path.corners.Length == 1)
                 return path.corners[0];
 
             float len = 0f;
 
-            for(int i = 1; i < path.corners.Length; i++) 
-                len += Vector3.Distance(path.corners[i], path.corners[i-1]);
-        
-  
+            for (int i = 1; i < path.corners.Length; i++)
+                len += Vector3.Distance(path.corners[i], path.corners[i - 1]);
+
+
             float d = 0f;
-            for(int i = 1; i < path.corners.Length; i++)
+            for (int i = 1; i < path.corners.Length; i++)
             {
-                float distanceBetweenPoints = d + Vector3.Distance(path.corners[i], path.corners[i-1]);
-                if(maxDistance < d + distanceBetweenPoints)
+                float distanceBetweenPoints = d + Vector3.Distance(path.corners[i], path.corners[i - 1]);
+                if (maxDistance < d + distanceBetweenPoints)
                 {
-                   float  t = (maxDistance - d) / distanceBetweenPoints; 
-                    return Vector3.Lerp(path.corners[i-1], path.corners[i], t);
+                    float t = (maxDistance - d) / distanceBetweenPoints;
+                    return Vector3.Lerp(path.corners[i - 1], path.corners[i], t);
                 }
                 d += distanceBetweenPoints;
             }
-        
+
             return path.corners[path.corners.Length - 1];
         }
 
@@ -556,6 +285,47 @@ namespace EVI
                 }
                 return temp.ToList();
             }
+
+            
         }
+    
+        #region Raycast
+
+            public static bool RaycastObject2D<T>(Vector2 start, out RaycastResult2D<T> result)
+            {
+                result = default;
+
+                RaycastHit2D hit = Physics2D.Raycast(start, Vector2.zero);
+                if (hit.collider != null)
+                {
+                    if (hit.transform.gameObject.TryGetComponent(out T character))
+                    {
+                        result = RaycastResult2D<T>.Create(character, hit);
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            public static bool RaycastObject2D<T>(TwoPoints2D point, out RaycastResult2D<T> result)
+            {
+                result = default;
+
+                RaycastHit2D[] hits = Physics2D.RaycastAll(point.Start, point.Direction, point.Distance);
+                foreach (var hit in hits)
+                {
+                    if (hit.transform.gameObject.TryGetComponent(out T character))
+                    {
+                        result = RaycastResult2D<T>.Create(character, hit);
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            #endregion
+        
     }
 }

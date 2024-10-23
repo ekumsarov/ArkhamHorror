@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 
 namespace EVI
 {
-    public abstract class SOInitializer<TClass> : SerializedScriptableObject, ISOInitializer<TClass>
+    public abstract class SOInitializer<TClass> : ScriptableObject, ISOInitializer<TClass>
     {
         #region Initialization
         private Dictionary<Type[], Delegate> _callbacksDictionary = new Dictionary<Type[], Delegate>(new TypeArrayComparer());
