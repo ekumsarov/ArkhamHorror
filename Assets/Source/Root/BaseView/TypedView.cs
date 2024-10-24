@@ -23,5 +23,12 @@ namespace EVI
                 return _model;
             }
         }
+
+        protected override void DestroyView(BaseModel model)
+        {
+            base.DestroyView(model);
+
+            _model = null;
+        }
     }
 }

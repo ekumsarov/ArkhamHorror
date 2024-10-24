@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace EVI.Game
 {
-    [JSONSerializable, CreateAssetMenu(menuName = "Models/Monster")]
-    public class MonsterCard : GameCard
+    [CreateAssetMenu(menuName = "Models/Item")]
+    public class ItemCard : GameCard
     {
+
     }
+
 }

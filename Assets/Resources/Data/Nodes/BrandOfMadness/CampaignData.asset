@@ -20,6 +20,7 @@ MonoBehaviour:
   _locations:
   - {fileID: 11400000, guid: 15830dc8d1813154784e28eb570374c7, type: 2}
   _gameCards:
-  - {fileID: 11400000, guid: 847b9bf17cbd5c94fa4f9d5a6947e2cc, type: 2}
-  - {fileID: 11400000, guid: 81ba083b05f1d44479f78f758e426644, type: 2}
-  - {fileID: 11400000, guid: 87f96e1253fdc234d96cbce8dfd16b9f, type: 2}
+  - {fileID: 11400000, guid: 9bd366663e061824d9ed0f551a75b612, type: 2}
+  - {fileID: 11400000, guid: 1890cfe62bba92d41892265dde1c3dc1, type: 2}
+  - {fileID: 11400000, guid: 51a0d604a55668f4eab9533d9b48ae65, type: 2}
+  - {fileID: 11400000, guid: bf8c42eb42395ec418421b43c74c73f1, type: 2}

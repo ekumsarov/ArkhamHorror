@@ -66,6 +66,7 @@ namespace EVI
 
         protected override JSONNode GetSaveExternal()
         {
+            PrepareForSave();
             var node = new JSONObject();
             var fieldsAndProperties = GetFieldsAndPropertiesWithAttribute<JSONConvertAttribute>();
             foreach (var kvp in fieldsAndProperties)
@@ -78,71 +79,81 @@ namespace EVI
             return node;
         }
 
+        protected virtual void PrepareForSave()
+        {
+
+        }
+
         private void PrepareBindings()
         {
             _fields = new Dictionary<string, Callback>();
 
             Type myType = this.GetType();
 
-            foreach (var field in myType.GetFields(BindingFlags.NonPublic | BindingFlags.Public
-            | BindingFlags.Instance | BindingFlags.Static))
+            foreach (var field in myType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
             {
                 if (field.GetCustomAttributes<BindablePropertyAttribute>().Count() == 0)
                     continue;
 
-                if (_fields.ContainsKey(field.Name))
+                string fieldName = NormalizeName(field.Name);
+                if (_fields.ContainsKey(fieldName))
                     continue;
 
-                _fields.Add(field.Name, new Callback(field.Name));
+                _fields.Add(fieldName, new Callback(field.Name));
             }
 
-            foreach (var field in myType.GetProperties(BindingFlags.NonPublic | BindingFlags.Public
-            | BindingFlags.Instance | BindingFlags.Static))
+            foreach (var property in myType.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
             {
-                if (field.GetCustomAttributes<BindablePropertyAttribute>().Count() == 0)
+                if (property.GetCustomAttributes<BindablePropertyAttribute>().Count() == 0)
                     continue;
 
-                if (_fields.ContainsKey(field.Name))
+                string propertyName = NormalizeName(property.Name);
+                if (_fields.ContainsKey(propertyName))
                     continue;
 
-                _fields.Add(field.Name, new Callback(field.Name));
+                _fields.Add(propertyName, new Callback(property.Name));
             }
 
-            foreach (var field in myType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public
-            | BindingFlags.Instance | BindingFlags.Static))
+            foreach (var method in myType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
             {
-                if (field.GetCustomAttributes<BindableEventAttribute>().Count() == 0)
+                if (method.GetCustomAttributes<BindableEventAttribute>().Count() == 0)
                     continue;
 
-                if (_fields.ContainsKey(field.Name))
+                string methodName = NormalizeName(method.Name);
+                if (_fields.ContainsKey(methodName))
                     continue;
 
-                _fields.Add(field.Name, new Callback(field.Name));
+                _fields.Add(methodName, new Callback(method.Name));
             }
         }
-
         public void InvokeChange<T>(string memberName, T obj)
         {
-            if (_fields.ContainsKey(memberName) == false)
+            string normalizedMemberName = NormalizeName(memberName);
+
+            if (!_fields.ContainsKey(normalizedMemberName))
                 return;
 
-            _fields[memberName].TryInvoke(obj);
+            _fields[normalizedMemberName].TryInvoke(obj);
         }
 
         public void InvokeChange<T>(string memberName, T obj, Action callback)
         {
-            if (_fields.ContainsKey(memberName) == false)
+            string normalizedMemberName = NormalizeName(memberName);
+
+            if (!_fields.ContainsKey(normalizedMemberName))
                 return;
 
-            _fields[memberName].TryInvoke(obj, callback);
+            _fields[normalizedMemberName].TryInvoke(obj, callback);
         }
 
         public void InvokeChange(string memberName, Action callback)
         {
-            if (_fields.ContainsKey(memberName) == false)
+            string normalizedMemberName = NormalizeName(memberName);
+
+            if (!_fields.ContainsKey(normalizedMemberName))
                 return;
 
-            _fields[memberName].TryInvoke(callback);
+            _fields[normalizedMemberName].TryInvoke(callback);
         }
 
         public List<string> GetBinds => _fields.Keys.ToList();
@@ -242,6 +253,12 @@ namespace EVI
             }
             return null;
         }
-        
+
+        private string NormalizeName(string name)
+        {
+            // Убираем все подчеркивания из имени
+            return name.Replace("_", "").ToLower();
+        }
+
     }
 }

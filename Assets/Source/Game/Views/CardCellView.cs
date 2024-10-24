@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using EVI.DDSystem;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -11,9 +12,10 @@ namespace EVI.Game
     public class CardCellView : TypedView<CardCell>
     {
         [Inject] private readonly DragDropSystem _dragDropSystem;
+        [Inject] private readonly CardConflict _conflict;
 
-        [SerializeField, OnInspectorInit("UpdateComponents")] private Slot _slot;
-        [SerializeField, OnInspectorInit("UpdateComponents")] private SceneLayout _layout;
+        [SerializeField, OnInspectorInit("UpdateComponents"), ReadOnly] private Slot _slot;
+        [SerializeField, OnInspectorInit("UpdateComponents"), ReadOnly] private SceneLayout _layout;
 
         public string Identifier => this.name;
 
@@ -23,6 +25,7 @@ namespace EVI.Game
         {
             base.InitializeBaseInternal();
             Model.SetupView(this);
+            Model.OnDestroyed += DestroyView;
 
             _slot.ItemPlaced += PlaceInCell;
             _slot.ItemRemoved += RemoveFromCell;
@@ -62,12 +65,10 @@ namespace EVI.Game
 
             if(_slot.AllowMultipleItems == false && _cards.Count > 0)
             {
-                GameCardView currentGameCardView = _cards[0];
-                _cards.Remove(currentGameCardView);
-                gameCard.CurrentSlot.TryPlaceItem(currentGameCardView);
+                _conflict.ConflictedCards(gameCard, _cards[0]);
+                return false;
             }
                 
-
             _cards.Add(gameCard);
             gameCard.SetParentSlot(_slot);
             gameCard.transform.SetParent(transform);
@@ -97,5 +98,26 @@ namespace EVI.Game
 
             
         }
+
+        protected override void DestroyView(BaseModel model)
+        {
+            GameCard gameCard = model as GameCard;
+            if(gameCard == null)
+            {
+                base.DestroyView(gameCard);
+                return;
+            }
+
+            if(_cards.Contains(gameCard.View))
+            {
+                _cards.Remove(gameCard.View);
+            }
+
+            gameCard = null;
+
+            base.DestroyView(gameCard);
+        }
+
+        
     }
 }

@@ -15,6 +15,8 @@ namespace EVI
         private IBindable _bindableModel;
         protected IBindable BindableModel => _bindableModel;
 
+        private Dictionary<string, Callback> _fields;
+
         protected override void InitializeBase(IBindable bindableModel)
         {
             _bindableModel = bindableModel;
@@ -25,7 +27,6 @@ namespace EVI
 
         protected virtual void InitializeBaseInternal()
         {
-
         }
 
         protected override void InitializeParameter()
@@ -36,64 +37,35 @@ namespace EVI
         {
             Type myType = this.GetType();
             List<string> keys = _bindableModel.GetBinds;
-            foreach(var method in myType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
-                | System.Reflection.BindingFlags.Public | BindingFlags.Default))
+
+            foreach (var method in myType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic |
+                                                     BindingFlags.Public | BindingFlags.Default))
             {
                 if (method.GetCustomAttributes<BindToAttribute>().Count() == 0)
                     continue;
 
-                foreach(var key in keys)
+                foreach (var key in keys)
                 {
-                    if(method.Name.Contains(key))
+                    if (NamesMatch(method.Name, key))
                     {
-                        var parameters = method.GetParameters();
-
-                        var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
-                        if (parameterType == null)
-                        {
-                            var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
-
-                            _bindableModel.AddListiner(key, genericDelegate);
-                        }
-                        else
-                        {
-                            var delegateType = typeof(Action<>).MakeGenericType(parameterType);
-                            var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
-
-                            _bindableModel.AddListiner(key, genericDelegate);
-                        }
+                        CreateAndAddListener(method, key);
                     }
                 }
             }
 
-            foreach(var method in myType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
-                | System.Reflection.BindingFlags.Public | BindingFlags.Default))
+            foreach (var method in myType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic |
+                                                     BindingFlags.Public | BindingFlags.Default))
             {
                 if (method.GetCustomAttributes<BindEventAttribute>().Count() == 0)
                     continue;
 
-                string name = method.Name.Replace("On", "");
+                string normalizedMethodName = NormalizeName(method.Name.Replace("On", ""));
 
-                foreach(var key in keys)
+                foreach (var key in keys)
                 {
-                    if(method.Name.Contains(key))
+                    if (NamesMatch(normalizedMethodName, key))
                     {
-                        var parameters = method.GetParameters();
-
-                        var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
-                        if (parameterType == null)
-                        {
-                            var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
-
-                            _bindableModel.AddListiner(key, genericDelegate);
-                        }
-                        else
-                        {
-                            var delegateType = typeof(Action<>).MakeGenericType(parameterType);
-                            var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
-
-                            _bindableModel.AddListiner(key, genericDelegate);
-                        }
+                        CreateAndAddListener(method, key);
                     }
                 }
             }
@@ -103,134 +75,111 @@ namespace EVI
         {
             Type myType = this.GetType();
             List<string> keys = _bindableModel.GetBinds;
-            foreach (var method in myType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
-                | System.Reflection.BindingFlags.Public | BindingFlags.Default))
+
+            foreach (var method in myType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic |
+                                                     BindingFlags.Public | BindingFlags.Default))
             {
                 if (method.GetCustomAttributes<BindToAttribute>().Count() == 0)
                     continue;
 
                 foreach (var key in keys)
                 {
-                    if (method.Name.Contains(key))
+                    if (NamesMatch(method.Name, key))
                     {
-                        var parameters = method.GetParameters();
-
-                        var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
-                        if (parameterType == null)
-                        {
-                            var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
-
-                            _bindableModel.RemoveListener(key, genericDelegate);
-                        }
-                        else
-                        {
-                            var delegateType = typeof(Action<>).MakeGenericType(parameterType);
-                            var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
-
-                            _bindableModel.RemoveListener(key, genericDelegate);
-                        }
-                    }
-                }
-            }
-
-            foreach (var method in myType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
-                | System.Reflection.BindingFlags.Public | BindingFlags.Default))
-            {
-                if (method.GetCustomAttributes<BindEventAttribute>().Count() == 0)
-                    continue;
-
-                foreach (var key in keys)
-                {
-                    if (method.Name.Contains(key))
-                    {
-                        var parameters = method.GetParameters();
-
-                        var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
-                        if (parameterType == null)
-                        {
-                            var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
-
-                            _bindableModel.RemoveListener(key, genericDelegate);
-                        }
-                        else
-                        {
-                            var delegateType = typeof(Action<>).MakeGenericType(parameterType);
-                            var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
-
-                            _bindableModel.RemoveListener(key, genericDelegate);
-                        }
+                        RemoveListener(method, key);
                     }
                 }
             }
         }
-
-        private Dictionary<string, Callback> _fields;
 
         public void BindProcess()
         {
             _fields = new Dictionary<string, Callback>();
-
             Type myType = this.GetType();
 
-            foreach (var field in myType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public
-            | BindingFlags.Instance | BindingFlags.Static))
+            foreach (var method in myType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public |
+                                                     BindingFlags.Instance | BindingFlags.Static))
             {
-                if (field.GetCustomAttributes<BindableProcessAttribute>().Count() == 0)
+                if (method.GetCustomAttributes<BindableProcessAttribute>().Count() == 0)
                     continue;
 
-                if (_fields.ContainsKey(field.Name))
+                string methodName = NormalizeName(method.Name);
+                if (_fields.ContainsKey(methodName))
                     continue;
 
-                _fields.Add(field.Name, new Callback(field.Name));
+                _fields.Add(methodName, new Callback(method.Name));
             }
 
             Type modelType = _bindableModel.GetType();
-            foreach(var method in modelType.GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
-                | System.Reflection.BindingFlags.Public | BindingFlags.Default))
+            foreach (var method in modelType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic |
+                                                        BindingFlags.Public | BindingFlags.Default))
             {
                 if (method.GetCustomAttributes<BindProcessAttribute>().Count() == 0)
                     continue;
 
-                foreach(var key in _fields.Keys)
+                foreach (var key in _fields.Keys)
                 {
-                    if(method.Name.Contains(key))
+                    if (NamesMatch(method.Name, key))
                     {
-                        var parameters = method.GetParameters();
-
-                        var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
-                        if (parameterType == null)
-                        {
-                            var genericDelegate = Delegate.CreateDelegate(typeof(Action), _bindableModel, method);
-
-                            AddListener(key, genericDelegate);
-                        }
-                        else
-                        {
-                            var delegateType = typeof(Action<>).MakeGenericType(parameterType);
-                            var genericDelegate = Delegate.CreateDelegate(delegateType, _bindableModel, method);
-
-                            AddListener(key, genericDelegate);
-                        }
+                        CreateAndAddListener(method, key, _bindableModel);
                     }
                 }
             }
         }
-        
-        private void AddListener(string key, Delegate del)
-        {
-            if (_fields.ContainsKey(key) == false || del == null)
-                return;
 
-            _fields[key].AddListener(del);
+        private bool NamesMatch(string name1, string name2)
+        {
+            return NormalizeName(name1).Contains(NormalizeName(name2));
+        }
+
+        private string NormalizeName(string name)
+        {
+            // Убираем все подчеркивания и приводим к нижнему регистру
+            return name.Replace("_", "").ToLower();
+        }
+
+        private void CreateAndAddListener(MethodInfo method, string key, object target = null)
+        {
+            var parameters = method.GetParameters();
+            var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
+
+            if (parameterType == null)
+            {
+                var genericDelegate = Delegate.CreateDelegate(typeof(Action), target ?? this, method);
+                _bindableModel.AddListiner(key, genericDelegate);
+            }
+            else
+            {
+                var delegateType = typeof(Action<>).MakeGenericType(parameterType);
+                var genericDelegate = Delegate.CreateDelegate(delegateType, target ?? this, method);
+                _bindableModel.AddListiner(key, genericDelegate);
+            }
+        }
+
+        private void RemoveListener(MethodInfo method, string key)
+        {
+            var parameters = method.GetParameters();
+            var parameterType = parameters.Length == 1 ? parameters[0].ParameterType : null;
+
+            if (parameterType == null)
+            {
+                var genericDelegate = Delegate.CreateDelegate(typeof(Action), this, method);
+                _bindableModel.RemoveListener(key, genericDelegate);
+            }
+            else
+            {
+                var delegateType = typeof(Action<>).MakeGenericType(parameterType);
+                var genericDelegate = Delegate.CreateDelegate(delegateType, this, method);
+                _bindableModel.RemoveListener(key, genericDelegate);
+            }
         }
 
         protected void InvokeProcess<T>(string key, T obj)
         {
-            if (_fields.ContainsKey(key) == false)
+            if (_fields.ContainsKey(NormalizeName(key)) == false)
                 return;
 
-            _fields[key].TryInvoke(obj);
+            _fields[NormalizeName(key)].TryInvoke(obj);
         }
     }
 }
-

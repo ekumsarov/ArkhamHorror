@@ -28,6 +28,22 @@ namespace EVI
         }
     }
 
+    public void RemoveObject<T>(string id)
+    {
+        Type type = typeof(T);
+
+        if (!_containers.ContainsKey(type))
+        {
+            // Автоматически регистрируем новый контейнер, если он не существует
+            RegisterContainer(new Container<T>());
+        }
+
+        if (_containers[type] is IContainer<T> container)
+        {
+            container.Remove(id);
+        }
+    }
+
     public IContainer<T> GetContainer<T>()
     {
         Type type = typeof(T);

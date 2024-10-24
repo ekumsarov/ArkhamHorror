@@ -37,7 +37,7 @@ public class BindableProcessAttribute : Attribute
 
 }
 
-[AttributeUsage(AttributeTargets.Property)]
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
 public class BindablePropertyAttribute : Attribute
 {
     public string Name;

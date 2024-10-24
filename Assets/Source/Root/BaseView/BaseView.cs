@@ -43,6 +43,10 @@ namespace EVI
 
         public Vector3 Position => transform.position;
 
-
+        protected virtual void DestroyView(BaseModel model)
+        {
+            Unbind();
+            Destroy(gameObject);
+        }
     }
 }

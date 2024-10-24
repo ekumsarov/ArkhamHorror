@@ -34,7 +34,7 @@ MonoBehaviour:
   _prefab: {fileID: 602764603470664414, guid: c487b234f51b75543924e4cee0eb1f6f, type: 3}
   _cellType: 0
   _cards:
-  - Munu
+  - Fishman
   _isAllowedMultiple: 0
 --- !u!114 &7581389700797470532
 MonoBehaviour:

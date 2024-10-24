@@ -12,18 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078aa70c76f1ca449a94bfc374c2f711, type: 3}
   m_Name: MainLayout
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
+  _id: MainLayout
   _prefab: {fileID: 4511854192810558861, guid: f3c11d71fbe31914ca23df8b6943c912, type: 3}
   _cellType: 7
   _cards:
+  - Jhon
   - Jack
-  - Lulu
+  - Vikulik
   _isAllowedMultiple: 1

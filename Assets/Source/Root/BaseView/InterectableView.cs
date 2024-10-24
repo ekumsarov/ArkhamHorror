@@ -21,6 +21,11 @@ namespace EVI
 
         private bool _isDragging = false;
 
+        public void SetDraggable(bool isDraggable)
+        {
+            _isDraggable = isDraggable;
+        }
+
         public bool IsDraggable => _isDraggable;
         public bool IsButton => _isButton;
 

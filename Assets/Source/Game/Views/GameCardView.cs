@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using EVI.DDSystem;
 using EVI.Game;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -14,8 +15,16 @@ namespace EVI
 
         [SerializeField] private InteractableView _interactableView;
 
+        [SerializeField] private TextMeshProUGUI _healthLabel;
+        [SerializeField] private TextMeshProUGUI _mindLabel;
+
         private Slot _currentSlot;
         public Slot CurrentSlot => _currentSlot;
+
+        public void SetDraggable(bool draggable)
+        {
+            _interactableView.SetDraggable(draggable);
+        }
 
         protected override void InitializeBaseInternal()
         {
@@ -24,7 +33,12 @@ namespace EVI
             _interactableView.Initialize(_camera);
             _interactableView.OnEndDrag += OnEndDrag;
             _interactableView.OnBeginDrag += OnBeginDrag;
+
+            _healthLabel.text = Model.HealthPoints.ToString();
+            _mindLabel.text = Model.MindPoints.ToString();
+
             Model.SetupView(this);
+            Model.OnDestroyed += DestroyView;
         }
 
         private void OnBeginDrag()
@@ -56,6 +70,28 @@ namespace EVI
         public void SetParentSlot(Slot slot)
         {
             _currentSlot = slot;
+        }
+
+        [BindTo]
+        private void HealthPointsChanged(int currentHealth)
+        {
+            _healthLabel.text = currentHealth.ToString();
+        }
+
+        [BindTo]
+        private void MindPointsChanged(int currentHealth)
+        {
+            _mindLabel.text = currentHealth.ToString();
+        }
+
+        protected override void DestroyView(BaseModel model)
+        {
+            if(_currentSlot != null)
+            {
+                _currentSlot.RemoveItem(this);
+            }
+
+            base.DestroyView(model);
         }
     }
 }

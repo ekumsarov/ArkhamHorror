@@ -9,20 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ab52e56b633a7e4a9d9ac296ad4c956, type: 3}
+  m_Script: {fileID: 11500000, guid: c042a4cfb2e9d134ab55f5a6be2275cb, type: 3}
   m_Name: Jack
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
+  _id: Jack
   _prefab: {fileID: 5207326174908815792, guid: 0db98c9390f9ba249bf20944a528fe2b, type: 3}
   _cardType: 1
   _skills: {fileID: 0}
-  _healthPoints: 100
+  _healthPoints: 50
   _mindPoints: 50
+  _currentHealthPoints: 50
+  _currentMindPoints: 50
+  _healthDamage: 2
+  _mindDamage: 2

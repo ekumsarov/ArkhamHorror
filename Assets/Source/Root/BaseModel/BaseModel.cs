@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System;
 
 namespace EVI
 {
@@ -13,10 +14,20 @@ namespace EVI
 
         private void BaseModelComponents()
         {
-            if(string.IsNullOrEmpty(_id))
-            {
-                _id = this.name;
-            }
+            _id = this.name;
+        }
+
+        public Action<BaseModel> OnDestroyed;
+        public void DestroyModel()
+        {
+            OnDestroyed?.Invoke(this);
+            CleanUp();
+            OnDestroyed = null;
+        }
+
+        protected virtual void CleanUp()
+        {
+
         }
     }
 }
