@@ -1,0 +1,143 @@
+{
+  "_type" : "EVI.CampaignData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "_campaingName" : "BrandOfMadness",
+  "_mainLayout" : {
+    "_type" : "EVI.CardCell, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "_prefab" : {
+      "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "PrefabName" : "CardLayout",
+      "PrefabType" : "UnityEngine.GameObject"
+    },
+    "_cellType" : "Player, Enemy, Item",
+    "_cards" : [
+      "Jhon",
+      "Jack",
+      "Vikulik"
+    ],
+    "_isAllowedMultiple" : true,
+    "_id" : "MainLayout"
+  },
+  "_locations" : [
+    {
+      "_type" : "EVI.Game.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "_prefab" : {
+        "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "PrefabName" : "Zentarim",
+        "PrefabType" : "UnityEngine.GameObject"
+      },
+      "_cells" : [
+        {
+          "_type" : "EVI.CardCell, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "_prefab" : {
+            "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "PrefabName" : "CardCell",
+            "PrefabType" : "UnityEngine.GameObject"
+          },
+          "_cellType" : "0",
+          "_cards" : [
+            "Fishman"
+          ],
+          "_isAllowedMultiple" : false,
+          "_id" : "ZentarimCell0"
+        },
+        {
+          "_type" : "EVI.CardCell, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "_prefab" : {
+            "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "PrefabName" : "CardCell",
+            "PrefabType" : "UnityEngine.GameObject"
+          },
+          "_cellType" : "0",
+          "_cards" : [
+          ],
+          "_isAllowedMultiple" : false,
+          "_id" : "ZentarimCell1"
+        },
+        {
+          "_type" : "EVI.CardCell, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "_prefab" : {
+            "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "PrefabName" : "CardCell",
+            "PrefabType" : "UnityEngine.GameObject"
+          },
+          "_cellType" : "0",
+          "_cards" : [
+          ],
+          "_isAllowedMultiple" : false,
+          "_id" : "ZentarimCell2"
+        }
+      ],
+      "_id" : "Zentarim"
+    }
+  ],
+  "_gameCards" : [
+    {
+      "_type" : "EVI.Game.PlayerCard, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "_prefab" : {
+        "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "PrefabName" : "GameCard",
+        "PrefabType" : "UnityEngine.GameObject"
+      },
+      "_cardType" : "Player",
+      "_skills" : null,
+      "_healthPoints" : 50,
+      "_mindPoints" : 50,
+      "_currentHealthPoints" : 50,
+      "_currentMindPoints" : 50,
+      "_healthDamage" : 2,
+      "_mindDamage" : 2,
+      "_id" : "Jack"
+    },
+    {
+      "_type" : "EVI.Game.PlayerCard, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "_prefab" : {
+        "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "PrefabName" : "GameCard",
+        "PrefabType" : "UnityEngine.GameObject"
+      },
+      "_cardType" : "Player",
+      "_skills" : null,
+      "_healthPoints" : 50,
+      "_mindPoints" : 50,
+      "_currentHealthPoints" : 50,
+      "_currentMindPoints" : 50,
+      "_healthDamage" : 2,
+      "_mindDamage" : 2,
+      "_id" : "Jhon"
+    },
+    {
+      "_type" : "EVI.Game.PlayerCard, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "_prefab" : {
+        "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "PrefabName" : "GameCard",
+        "PrefabType" : "UnityEngine.GameObject"
+      },
+      "_cardType" : "Player",
+      "_skills" : null,
+      "_healthPoints" : 50,
+      "_mindPoints" : 50,
+      "_currentHealthPoints" : 50,
+      "_currentMindPoints" : 50,
+      "_healthDamage" : 2,
+      "_mindDamage" : 2,
+      "_id" : "Jhon"
+    },
+    {
+      "_type" : "EVI.Game.MonsterCard, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "_prefab" : {
+        "_type" : "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "PrefabName" : "GameCard 1",
+        "PrefabType" : "UnityEngine.GameObject"
+      },
+      "_cardType" : "Enemy",
+      "_skills" : null,
+      "_healthPoints" : 4,
+      "_mindPoints" : 4,
+      "_currentHealthPoints" : 4,
+      "_currentMindPoints" : 4,
+      "_healthDamage" : 1,
+      "_mindDamage" : 1,
+      "_id" : "Fishman"
+    }
+  ]
+}

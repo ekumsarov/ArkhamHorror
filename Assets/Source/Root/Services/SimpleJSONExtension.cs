@@ -108,7 +108,7 @@ public static class SimpleJSONExtensions
         if (typeof(IList).IsAssignableFrom(type))
         {
             var listType = type.GetGenericArguments()[0];
-            var list = (IList)Activator.CreateInstance(type);
+            var list = (IList)CreateInstance(type);
             foreach (var item in node.AsArray)
             {
                 list.Add(JsonToObject(item, listType));
@@ -120,7 +120,7 @@ public static class SimpleJSONExtensions
         {
             var keyType = type.GetGenericArguments()[0];
             var valueType = type.GetGenericArguments()[1];
-            var dict = (IDictionary)Activator.CreateInstance(type);
+            var dict = (IDictionary)CreateInstance(type);
             foreach (var key in node.Keys)
             {
                 dict.Add(Convert.ChangeType(key, keyType), JsonToObject(node[key], valueType));
@@ -210,7 +210,7 @@ public static class SimpleJSONExtensions
 
         if (type.GetCustomAttribute<JSONSerializableAttribute>() != null)
         {
-            var obj = Activator.CreateInstance(type, true);
+            var obj = CreateInstance(type);
             var members = GetFieldsAndPropertiesWithAttribute<JSONConvertAttribute>(type);
             foreach (var kvp in members)
             {
@@ -337,12 +337,12 @@ public static class SimpleJSONExtensions
     {
         var jsonObject = new JSONObject();
 
-        if(sprite == null)
+        if (sprite == null)
         {
             jsonObject.Add("ResourcePath", null);
             return jsonObject;
         }
-            
+
 
         jsonObject["SpriteName"] = sprite.name;
         jsonObject["ResourcePath"] = sprite.name; // Assuming sprite is loaded from Resources with name as path
@@ -353,9 +353,25 @@ public static class SimpleJSONExtensions
     {
         var resourcePath = node["ResourcePath"];
 
-        if(resourcePath == null)
+        if (resourcePath == null)
             return null;
 
         return Resources.Load<Sprite>(resourcePath);
+    }
+
+    private static object CreateInstance(Type type)
+    {
+        if (type == null)
+        {
+            Debug.LogError("Тип данных для создания не определен.");
+            return null;
+        }
+
+        if (typeof(ScriptableObject).IsAssignableFrom(type))
+        {
+            return ScriptableObject.CreateInstance(type);
+        }
+
+        return Activator.CreateInstance(type, true);
     }
 }

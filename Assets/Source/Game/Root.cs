@@ -19,10 +19,13 @@ public class Root : MonoBehaviour, IInitializable
     [Inject] private readonly CameraHandler _camera;
     [Inject] private readonly ContainerSystem _containers;
 
-    [SerializeField] private CampaignData _campaignData;
+    //[SerializeField] private CampaignData _campaignData;
+    [SerializeField, FilePath] private string _campaignPath;
 
     public void Initialize()
     {
+        CampaignData _campaignData = SerializationModule.DeserializeFromJsonPath<CampaignData>(_campaignPath);
+
         foreach(var card in _campaignData.GameCards)
         {
             GameCard gameCard = _instatinator.GetModel<GameCard>(card);

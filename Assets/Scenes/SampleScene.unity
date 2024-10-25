@@ -253,72 +253,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
---- !u!1 &195642730
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 195642733}
-  - component: {fileID: 195642732}
-  - component: {fileID: 195642734}
-  m_Layer: 0
-  m_Name: Test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &195642732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195642730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b89b894b04f75f940b218829733061c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _manualControl: 1
-  anchorType: 4
-  anchorOffset: {x: 0, y: 0, z: 0}
-  _rotation: {x: 0, y: 0, z: 0}
-  _scale: {x: 1, y: 1, z: 1}
---- !u!4 &195642733
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195642730}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &195642734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195642730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb1f3a14a66962a4ab88d86375396ee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cardID:
-  - EVI.Game.GameCard
-  - EVI.Game.Location
-  CultistView: {fileID: 0}
 --- !u!1 &472411910
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,7 +2985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22bb5552372840f48b379461cdc841ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _campaignData: {fileID: 11400000, guid: 3aae4bba17090084487304d9a38e44a1, type: 2}
+  _campaignPath: Assets/Resources/Data/Campaings/hello.json
 --- !u!1 &2082653585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3382,7 +3316,6 @@ SceneRoots:
   - {fileID: 2075275743}
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 195642733}
   - {fileID: 2116795913}
   - {fileID: 1727685337}
   - {fileID: 185271430}
