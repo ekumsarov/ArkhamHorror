@@ -29,6 +29,9 @@ namespace EVI
         [SerializeField, JSONConvert] private List<GameCard> _gameCards = new List<GameCard>();
         public List<GameCard> GameCards => _gameCards;
 
+        [SerializeField, JSONConvert] private List<Resource> _resources = new List<Resource>();
+        public List<Resource> Resources => _resources;
+
         [Button]
         private void SaveCampaing([FolderPath] string toPath)
         {

@@ -8,7 +8,6 @@ namespace EVI
 {
     public class NodeSystem : MonoBehaviour, IUpdatable, IRegistrator
     {
-        [Inject] private LevelDataHandler _reader;
         [Inject] private Instatinator _instatinator;
         [Inject] private IRegystryRoot _registrator;
         
@@ -19,15 +18,6 @@ namespace EVI
 
         public void Initialize()
         {
-            _nodes = _reader.Data.Data.Nodes;
-
-            foreach (var node in _nodes)
-            {
-                _instatinator.QueueForInject(node);
-            }
-
-            _currentNode = _reader.Data.Data.RootNode;
-            _currentNode.Enter(this);
         }
 
         public void NextNode(LogicNode node)
@@ -40,7 +30,7 @@ namespace EVI
             if(node != null)
             {
                 _currentNode = node;
-                _currentNode.Enter(this);
+                _currentNode.Enter();
             }
             else
             {

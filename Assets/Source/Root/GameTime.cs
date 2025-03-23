@@ -7,17 +7,20 @@ using UnityEngine;
 
 namespace EVI
 {
-    [Serializable]
+    [Serializable, JSONSerializable]
     public class GameTime
     {
-        [SerializeField]
+        [SerializeField, JSONConvert]
         private int _maxDay;
         public int MaxDay => _maxDay;
 
-        [SerializeField]
+        [SerializeField, JSONConvert]
         private int _currentDay = 0;
         public int CurrentDay => _currentDay;
 
+        [SerializeField, JSONConvert]
+        private GamePhase _currentPhase = GamePhase.Morning;
+        public GamePhase CurrentPhase => _currentPhase;
         
     }
 }

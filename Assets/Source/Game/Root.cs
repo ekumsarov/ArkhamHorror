@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 using SimpleJSON;
 using EVI.Game;
 using EVI.DDSystem;
+using DG.Tweening;
 
 public class Root : MonoBehaviour, IInitializable
 {
@@ -22,9 +23,13 @@ public class Root : MonoBehaviour, IInitializable
     //[SerializeField] private CampaignData _campaignData;
     [SerializeField, FilePath] private string _campaignPath;
 
+    [SerializeField] private Resource _resource;
+    [SerializeField] private ResourceView _resourceView;
+    [SerializeField] private Transform _resourcePanel;
+
     public void Initialize()
     {
-        CampaignData _campaignData = SerializationModule.DeserializeFromJsonPath<CampaignData>(_campaignPath);
+        /*CampaignData _campaignData = SerializationModule.DeserializeFromJsonPath<CampaignData>(_campaignPath);
 
         foreach(var card in _campaignData.GameCards)
         {
@@ -44,7 +49,11 @@ public class Root : MonoBehaviour, IInitializable
 
         CardCell mainCell = _instatinator.GetModel<CardCell>(_campaignData.MainLayout);
         _instatinator.InstatinateAndGetPresenter<CardCellView>(_campaignData.MainLayout.Prefab, mainCell);
-        _containers.RegisterObject(mainCell.ID, mainCell);
+        _containers.RegisterObject(mainCell.ID, mainCell);*/
 
+        
+        Resource resource = _instatinator.GetModel<Resource>(_resource);
+        ResourceView resView = _instatinator.InstatinateAndGetPresenter<ResourceView>(_resourceView.gameObject, resource);
+        resView.transform.SetParent(_resourcePanel);
     }
 }

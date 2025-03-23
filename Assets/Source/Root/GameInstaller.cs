@@ -16,11 +16,13 @@ namespace EVI
         [SerializeField] private InputHandler _inputHandler;
         [SerializeField] private CardConflict _cardConflict;
         [SerializeField] private CoroutineHelper _coroutineHelper;
+        [SerializeField] private NodeSystem _nodeSystem;
 
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<ContainerSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<MainInput>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RootTick>().AsSingle();
             Container.BindInterfacesAndSelfTo<CardConflict>().FromInstance(_cardConflict).AsSingle();
             Container.BindInterfacesAndSelfTo<CoroutineHelper>().FromInstance(_coroutineHelper).AsSingle();
             Container.BindInterfacesAndSelfTo<CameraHandler>().FromInstance(_bounds).AsSingle();
@@ -28,7 +30,7 @@ namespace EVI
             Container.BindInterfacesAndSelfTo<DragDropSystem>().FromInstance(_dragDropSystem).AsSingle();
             Container.BindInterfacesAndSelfTo<InputHandler>().FromInstance(_inputHandler).AsSingle();
             
-
+            Container.BindInterfacesAndSelfTo<NodeSystem>().FromInstance(_nodeSystem).AsSingle();
             Container.BindInterfacesAndSelfTo<Root>().FromInstance(_root).AsSingle();
         }
     }

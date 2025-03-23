@@ -37,27 +37,29 @@ namespace EVI
 
         private LogicNode _selectedNode = null;
         public LogicNode NextNode => _selectedNode != null ? _selectedNode : _succesNextNode;
+        public string DisplayedText => _text.GetLocalizedString();
 
-        private Encounter _encounter;
-        public void BindEncounter(Encounter encounter)
+        public void Evaluate(DialoguePanel panel)
         {
-            _encounter = encounter;
-        }
-
-        public void Clicked(DialoguePanel panel)
-        {
+            // Для Simple и Condition можно сразу set
+            // Для SkillCheck может быть "отложенно"
             _selectedNode = null;
 
-            if(_checkType == ChoiceCheckType.SkillCheck)
+            if (_checkType == ChoiceCheckType.Simple)
             {
-                List<GameCard> detectives = _encounter.DetectiveCards().Where(card => card.CardType == CardType.Player).ToList();
-                
-
-
-                return;
+                _selectedNode = _succesNextNode;
             }
+            else if (_checkType == ChoiceCheckType.Condition)
+            {
+                bool conditionResult = true; // Допустим
+                _selectedNode = conditionResult ? _succesNextNode : _failNextNode;
+            }
+        }
 
-
+        public LogicNode FinalizeChoice(bool success)
+        {
+            _selectedNode = success ? _succesNextNode : _failNextNode;
+            return _selectedNode;
         }
 
         [OnInspectorInit]

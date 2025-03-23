@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb40c4739e3f0b4583744a98de28021, type: 3}
+  m_Name: Zentarim
+  m_EditorClassIdentifier: 
+  _id: Zentarim
+  _prefab: {fileID: 5617194294908722374, guid: c7d0dbaf639e7b94fa93051e75557da7, type: 3}
+  _cells:
+  - {fileID: 6342953565651592945}
+  - {fileID: 8314589241178106683}
+  - {fileID: 7581389700797470532}
+--- !u!114 &6342953565651592945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078aa70c76f1ca449a94bfc374c2f711, type: 3}
+  m_Name: ZentarimCell0
+  m_EditorClassIdentifier: 
+  _id: ZentarimCell0
+  _prefab: {fileID: 602764603470664414, guid: c487b234f51b75543924e4cee0eb1f6f, type: 3}
+  _cellType: 0
+  _cards:
+  - Fishman
+  _isAllowedMultiple: 0
+--- !u!114 &7581389700797470532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078aa70c76f1ca449a94bfc374c2f711, type: 3}
+  m_Name: ZentarimCell2
+  m_EditorClassIdentifier: 
+  _id: ZentarimCell2
+  _prefab: {fileID: 602764603470664414, guid: c487b234f51b75543924e4cee0eb1f6f, type: 3}
+  _cellType: 0
+  _cards: []
+  _isAllowedMultiple: 0
+--- !u!114 &8314589241178106683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078aa70c76f1ca449a94bfc374c2f711, type: 3}
+  m_Name: ZentarimCell1
+  m_EditorClassIdentifier: 
+  _id: ZentarimCell1
+  _prefab: {fileID: 602764603470664414, guid: c487b234f51b75543924e4cee0eb1f6f, type: 3}
+  _cellType: 0
+  _cards: []
+  _isAllowedMultiple: 0

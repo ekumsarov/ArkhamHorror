@@ -15,6 +15,14 @@ public enum LocationType
 
 }
 
+public enum NodeActionType
+{
+    Create,
+    Remove,
+    Modify,
+    Setup
+}
+
 public enum GameState
 {
     ManualControl

@@ -51,7 +51,7 @@ namespace EVI
             string dest = Directory.GetParent(AssetDatabase.GetAssetPath(this)).FullName;
             PathUtilities.TryMakeRelative(Path.GetDirectoryName(Application.dataPath), dest, out dest);
 
-            LogicNode.CreateNode(_nodeName, dest, _nodeType, UpdateData);
+            //LogicNode.CreateNode(_nodeName, dest, _nodeType, UpdateData);
         }
 
         [SerializeField] private LogicNode _rootNode;

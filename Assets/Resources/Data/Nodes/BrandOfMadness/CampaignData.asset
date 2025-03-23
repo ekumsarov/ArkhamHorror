@@ -15,7 +15,7 @@ MonoBehaviour:
   _gameTime:
     _maxDay: 3
     _currentDay: 2
-  _campaingName: hello
+  _campaingName: BrandOfMadness
   _mainLayout: {fileID: 11400000, guid: 5306cb4f3cb3251498973db67534cc32, type: 2}
   _locations:
   - {fileID: 11400000, guid: 15830dc8d1813154784e28eb570374c7, type: 2}

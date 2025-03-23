@@ -48,6 +48,11 @@ namespace EVI.Game
             }
         }
 
+        public List<GameCard> GetCard(CardType cardType)
+        {
+            return null;
+        }
+
 #if UNITY_EDITOR
         [Button]
         private void AddCell()

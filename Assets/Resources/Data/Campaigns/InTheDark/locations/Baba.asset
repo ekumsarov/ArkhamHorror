@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb40c4739e3f0b4583744a98de28021, type: 3}
+  m_Name: Baba
+  m_EditorClassIdentifier: 
+  _id: Baba
+  eventQueue: []
+  randomPool:
+  - {fileID: 11400000, guid: 28e57f771b7bf8c4a967616732ca855c, type: 2}
+  _prefab: {fileID: 0}
+  _cells:
+  - {fileID: 216250951629489823}
+--- !u!114 &216250951629489823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078aa70c76f1ca449a94bfc374c2f711, type: 3}
+  m_Name: BabaCell0
+  m_EditorClassIdentifier: 
+  _id: 
+  eventQueue: []
+  randomPool: []
+  _prefab: {fileID: 0}
+  _cellType: 0
+  _cards: []
+  _isAllowedMultiple: 0

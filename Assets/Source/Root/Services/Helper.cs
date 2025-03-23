@@ -12,16 +12,6 @@ namespace EVI
 {
     public static class Helper
     {
-        public const int START_SCENE = 10001;
-        public const int CHARACTER_MOVE = 10002;
-        public const int START_BATTLE = 10003;
-        public const int PLAN_READY = 10004;
-        public const int RESET_BATTLE_ROUND = 10005;
-        public const int PING_EVENT = 10006;
-        public const int CHARACTER_ROTATE = 10007;
-        public const int GET_MESSAGE = 10008;
-        public const int SEND_HP = 10009;
-
         public static JSONNode GetNodeFrom<T>(IJsonProcessing<T> arg)
         {
             if (arg == null)
